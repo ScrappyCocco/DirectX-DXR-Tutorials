@@ -124,9 +124,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Dx12\d3dx12.h" />
     <ClInclude Include="Win32Application.h" />
     <ClInclude Include="D3D12HelloTriangle.h" />
-    <ClInclude Include="d3dx12.h" />
     <ClInclude Include="DXSample.h" />
     <ClInclude Include="DXSampleHelper.h" />
     <ClInclude Include="stdafx.h" />

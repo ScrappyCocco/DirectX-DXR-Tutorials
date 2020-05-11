@@ -13,8 +13,6 @@
 
 #include "DXSample.h"
 
-using namespace DirectX;
-
 // Note that while ComPtr is used to manage the lifetime of resources on the CPU,
 // it has no understanding of the lifetime of resources on the GPU. Apps must account
 // for the GPU lifetime of resources to avoid destroying objects that may still be
@@ -37,8 +35,8 @@ private:
 
 	struct Vertex
 	{
-		XMFLOAT3 position;
-		XMFLOAT4 color;
+		DirectX::XMFLOAT3 position;
+		DirectX::XMFLOAT4 color;
 	};
 
 	// Pipeline objects.

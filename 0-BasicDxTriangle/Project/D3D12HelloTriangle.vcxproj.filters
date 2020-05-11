@@ -33,7 +33,7 @@
     <ClInclude Include="Win32Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="d3dx12.h">
+    <ClInclude Include="Dx12\d3dx12.h">
       <Filter>Header Files\Dx12</Filter>
     </ClInclude>
   </ItemGroup>

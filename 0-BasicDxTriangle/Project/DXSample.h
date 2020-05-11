@@ -53,7 +53,6 @@ protected:
 	bool m_useWarpDevice;
 
 private:
-
 	// Window title.
 	std::wstring m_title;
 };
