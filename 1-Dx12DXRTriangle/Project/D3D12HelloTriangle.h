@@ -99,14 +99,15 @@ private:
 	/// \param     vVertexBuffers : pair of buffer and vertex count
 	/// \return    AccelerationStructureBuffers for TLAS
 	AccelerationStructureBuffers CreateBottomLevelAS(
-		std::vector<std::pair<ComPtr<ID3D12Resource>, uint32_t>> vVertexBuffers) const;
+		std::vector<std::pair<ComPtr<ID3D12Resource>, uint32_t>> vVertexBuffers
+	) const;
 
 	/// Create the main acceleration structure that holds
 	/// all instances of the scene
 	/// \param     instances : pair of BLAS and transform
 	void CreateTopLevelAS(
-		const std::vector<std::pair<ComPtr<ID3D12Resource>, 
-		DirectX::XMMATRIX>>& instances
+		const std::vector<std::pair<ComPtr<ID3D12Resource>,
+		                            DirectX::XMMATRIX>>& instances
 	);
 
 	/// Create all acceleration structures, bottom and top

@@ -42,23 +42,22 @@ void D3D12HelloTriangle::OnInit()
 	CreateAccelerationStructures();
 
 	// Command lists are created in the recording state, but there is
-	// nothing to record yet. The main loop expects it to be closed, so
-	// close it now.
+	// nothing to record yet. The main loop expects it to be closed, so close it now.
 	ThrowIfFailed(m_commandList->Close());
 
 	// Create the raytracing pipeline, associating the shader code to symbol names
 	// and to their root signatures, and defining the amount of memory carried by
 	// rays (ray payload)
-	CreateRaytracingPipeline(); // #DXR
+	CreateRaytracingPipeline();
 
 	// Allocate the buffer storing the raytracing output, with the same dimensions
 	// as the target image
-	CreateRaytracingOutputBuffer(); // #DXR
+	CreateRaytracingOutputBuffer();
 
 	// Create the buffer containing the raytracing result (always output in a
 	// UAV), and create the heap referencing the resources used by the raytracing,
 	// such as the acceleration structure
-	CreateShaderResourceHeap(); // #DXR
+	CreateShaderResourceHeap();
 
 	// Create the shader binding table and indicating which shaders
 	// are invoked for each instance in the  AS
@@ -94,7 +93,8 @@ void D3D12HelloTriangle::LoadPipeline()
 		ComPtr<IDXGIAdapter> warpAdapter;
 		ThrowIfFailed(factory->EnumWarpAdapter(IID_PPV_ARGS(&warpAdapter)));
 
-		ThrowIfFailed(D3D12CreateDevice(warpAdapter.Get(), D3D_FEATURE_LEVEL_11_0,
+		ThrowIfFailed(D3D12CreateDevice(warpAdapter.Get(),
+		                                D3D_FEATURE_LEVEL_12_1,
 		                                IID_PPV_ARGS(&m_device)));
 	}
 	else
@@ -103,7 +103,7 @@ void D3D12HelloTriangle::LoadPipeline()
 		GetHardwareAdapter(factory.Get(), &hardwareAdapter);
 
 		ThrowIfFailed(D3D12CreateDevice(hardwareAdapter.Get(),
-		                                D3D_FEATURE_LEVEL_11_0,
+		                                D3D_FEATURE_LEVEL_12_1,
 		                                IID_PPV_ARGS(&m_device)));
 	}
 
@@ -205,7 +205,7 @@ void D3D12HelloTriangle::LoadAssets()
 #endif
 
 		const std::wstring shader_path = L"shaders/shaders.hlsl";
-		
+
 		ThrowIfFailed(D3DCompileFromFile(shader_path.c_str(),
 		                                 nullptr, nullptr, "VSMain", "vs_5_0",
 		                                 compileFlags, 0, &vertexShader, nullptr));
@@ -367,7 +367,6 @@ void D3D12HelloTriangle::PopulateCommandList() const
 	m_commandList->OMSetRenderTargets(1, &rtvHandle, FALSE, nullptr);
 
 	// Record commands.
-	// #DXR
 	if (m_raster)
 	{
 		const float clearColor[] = {0.0f, 0.2f, 0.4f, 1.0f};

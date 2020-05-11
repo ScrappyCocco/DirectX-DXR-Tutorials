@@ -57,7 +57,7 @@
     <ClInclude Include="nv_helpers_dx12\TopLevelASGenerator.h">
       <Filter>Header Files\nv_helpers_dx12</Filter>
     </ClInclude>
-    <ClInclude Include="d3dx12.h">
+    <ClInclude Include="Dx12\d3dx12.h">
       <Filter>Header Files\Dx12</Filter>
     </ClInclude>
   </ItemGroup>
