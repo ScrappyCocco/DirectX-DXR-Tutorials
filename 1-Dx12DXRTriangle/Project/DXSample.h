@@ -53,9 +53,6 @@ protected:
 	bool m_useWarpDevice;
 
 private:
-	// Root assets path.
-	std::wstring m_assetsPath;
-
 	// Window title.
 	std::wstring m_title;
 };
