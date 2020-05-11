@@ -1,4 +1,4 @@
-![Screenshot of Dx12 basic triangle](ReadmeMedia/Screenshot.png)
+![Screenshot of Dx12 basic triangle](ReadmeMedia/screenshot.png)
 
 # DirectX 12 "HelloTriangle" Example
 
