@@ -19,6 +19,7 @@ Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/auth
   - [SBT Entry](#sbt-entry)
   - [CreateShaderBindingTable](#createshaderbindingtable)
 - [Command List](#command-list)
+- [Further reading](#further-reading)
 
 # Introduction
 As Nvidia says, this is only for educational purposes to showcase a basic integration of raytracing, a real integration would require additional levels of abstraction.
@@ -210,3 +211,6 @@ The hit groups are defined similarly to the miss shaders. In practice the SBT wi
 The raytracing descriptor also contains the size of the image to render, which defines the number of threads running the ray generation program simultaneously. We then bind the raytracing pipeline in the command list. **The `DispatchRays` call is the one actually enqueuing the raytracing work on the command list.** [(code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/D3D12HelloTriangle.cpp#L438)
 
 Once the raytraced image is generated, it still needs to be copied into the render target so that it can be displayed. For this, we first transition the raytracing output m_outputResource from the `D3D12_RESOURCE_STATE_UNORDERED_ACCESS` it had to allow the shaders to write to it, to a `D3D12_RESOURCE_STATE_COPY_SOURCE`. At this point, the render target has a `D3D12_RESOURCE_STATE_RENDER_TARGET` state, which allows it to be presented on the screen. We therefore need to transition it to the `D3D12_RESOURCE_STATE_COPY_DEST` so that the contents of the raytracing output can be copied to it. The copy itself is performed by `ID3D12GraphicsCommandList::CopyResource`. Once the copy is made, the render target is transitioned back to the `D3D12_RESOURCE_STATE_RENDER_TARGET` for display. [(code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/D3D12HelloTriangle.cpp#L440)
+
+# Further reading
+Remember to check [DXR Resources](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials#resources) if you want to know more about the topic or about how to realize these tutorials.
