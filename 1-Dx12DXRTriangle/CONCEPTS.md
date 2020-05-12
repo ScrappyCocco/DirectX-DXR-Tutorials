@@ -1,7 +1,7 @@
 # [Nvidia] DXR "HelloTriangle"  - Important Concepts
-This document summarize most of the concepts of the Nvidia tutorial, in order to focus attention on some parts and functions in the code. Note that this document will omit some details about a few variables types and calls that are not strictly necessary to understand the flow.
+This document is a summarize and a rework of the concepts of the Nvidia tutorial, in order to focus attention on some parts and functions in the code. Also because rewriting it helped me a lot to understand the basics. Note that this document will omit some details about a few variables types and calls that are not strictly necessary to understand the flow.
 
-Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/author/mlefrancois/) and [Pascal Gautron](https://devblogs.nvidia.com/author/pgautron/) that made this tutorial, all this work is theirs, i just copied and changed it a bit for educational purposes.
+Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/author/mlefrancois/) and [Pascal Gautron](https://devblogs.nvidia.com/author/pgautron/) that made this tutorial, all this work is theirs, i just took it to change and summarize it a bit for educational purposes.
 
 ## Contents
 * [Introduction](#Introduction)
@@ -149,3 +149,48 @@ The data accessible to all shaders is typically referenced in a heap bound befor
 In this tutorial the heap only contains two entries: the raytracing output buffer accessed as a UAV, and the top-level acceleration structure which is a shader resource (SRV) with a specific dimension flag `D3D12_SRV_DIMENSION_RAYTRACING_ACCELERATION_STRUCTURE`.
 
 # The Shader Binding Table
+The Shader Binding Table is where all programs and TLAS are bind together to know which program to execute.
+
+There is one **RayGen** at least one **Miss**, followed by the **Hit**. There should be n entries for the Hit, up to the maximum index passed to the instance description parameter `InstanceContributionToHitGroupIndex`.
+
+Since raytracing can hit any surface of the scene at any time, it is impossible to know in advance which shaders need to be bound. Therefore, the Shader Binding Table (SBT) is an array of SBT entries holding information on the location of shaders and their resources for each object.
+
+## SBT Entry
+A SBT entry consists of a header and data section. The header stores a shader identifier, while the data section provides pointers and raw data to the shader, according to the layout described in the root signature of the shader.
+
+The `ShaderBindingTableGenerator` contains the SBT helper that eases the SBT creation process and enforces consistency between the SBT layout and the later raytracing calls. Internally the `Add*` methods collect the names of the shader programs associated with the pointers of their input resources in GPU memory. The Generate call maps the input buffer and, for each collected entry, sets the corresponding shader identifier using `ID3D12StateObjectProperties::GetShaderIdentifier()` and copies its resource pointers afterwards. The helper first copies the ray generation programs, then the miss programs, and finally the hit groups.
+
+## CreateShaderBindingTable
+The Shader Binding Table (SBT) is the cornerstone of the raytracing setup: it links the geometry instances to their corresponding hit groups, and binds the resources to the raytracing shader program according to their root signatures. In this tutorial, we have a scene containing a single instance. 
+
+The Shader Binding Table would then have 3 entries: 
+* One for the ray generation program;
+* One for the miss program;
+* One for the hit group.
+
+The ray generation needs to access two external resources: 
+* The raytracing output buffer;
+* The top-level acceleration structure. 
+
+The root signature of the ray generation shader requires both resources to be available in the currently bound heap. Consequently, the shader only needs to have a pointer to the beginning of the heap. The hit group and the miss program do not use any external data, and therefore have an empty root signature.
+
+When starting the raytracing process, the identifier of the ray generation program will be used to execute its entry point for each pixel. The pointer to the heap will allow the shader to find the required resources.
+
+When the ray generation program **shoots a ray**, the heap pointer will be used to find the location of the top-level acceleration structure in GPU memory and trigger the tracing itself. The ray may **miss** all geometry, in which case the SBT will be used to find the miss shader identifier and execute the corresponding code. If the ray **hits** the geometry, the hit group identifier will be used to find the shaders associated to the hit group: intersection, any hit and closest hit. In order, those shaders will be executed, and the result sent to the ray generation shader. The ray generation shader can then access the raytracing output buffer from the heap, and write its result.
+
+# Command List
+The main parts of this section are the setup of the raytracing descriptor `D3D12_DISPATCH_RAYS_DESC` which defines how to interpret the Shader Binding Table, and how many pixels need to be rendered (ie. how many threads will run the ray generation program simultaneously). The raytracing is actually performed by calling `ID3D12GraphicsCommandList4::DispatchRays()`.
+
+As previously described raytracing, unlike rasterization, cannot directly render into a render target. Instead, we need to copy the contents of the raytracing output into the render target using `CD3DX12_RESOURCE_BARRIER::Transition` objects. When entering the PopulateCommandList method the raytracing output buffer is in a `D3D12_RESOURCE_STATE_COPY_SOURCE` state. In order to allow the ray generation shader to write to the buffer as a UAV, we transition the buffer into the `D3D12_RESOURCE_STATE_UNORDERED_ACCESS`. [(code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/D3D12HelloTriangle.cpp#L390)
+
+The `D3D12_DISPATCH_RAYS_DESC` descriptor specifies the work to be done during raytracing: specifically it contains the entry points in the Shader Binding Table (SBT), and the size of the image to render.
+
+Using the helper class, the SBT always contains **first the ray generation shader**, then the miss shaders, and finally the hit groups. The start address of the SBT section containing the ray generation shader is then the beginning of the SBT buffer. Each ray generation entry in the SBT has the same size, which is also obtained from the helpers `GetRayGenSectionSize` call. This enforces consistency between the SBT and the raytracing, which is a common source of errors. Note that only one ray generation shader is allowed, since this is the entry point of the raytracing process. If several ray generation shaders were present in the SBT, we would need to offset the `StartAddress` of the ray generation shader record accordingly. [(code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/D3D12HelloTriangle.cpp#L395)
+
+The **miss shaders** immediately follow the ray generation shaders, hence the beginning of the miss shaders is obtained by offsetting the SBT buffer pointer by the size of the ray generation section. The `StrideInBytes` allows raytracing to use several miss programs, each associated to a ray type. This allows for example to have primary rays, for which the miss shader would return the environment color, and shadow rays for which the miss shader returns a visibility value. [(code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/D3D12HelloTriangle.cpp#L410)
+
+The hit groups are defined similarly to the miss shaders. In practice the SBT will contain many hit groups, just like a rasterization-based renderer would have many pixel shaders. [(code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/D3D12HelloTriangle.cpp#L421)
+
+The raytracing descriptor also contains the size of the image to render, which defines the number of threads running the ray generation program simultaneously. We then bind the raytracing pipeline in the command list. **The `DispatchRays` call is the one actually enqueuing the raytracing work on the command list.** [(code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/D3D12HelloTriangle.cpp#L438)
+
+Once the raytraced image is generated, it still needs to be copied into the render target so that it can be displayed. For this, we first transition the raytracing output m_outputResource from the `D3D12_RESOURCE_STATE_UNORDERED_ACCESS` it had to allow the shaders to write to it, to a `D3D12_RESOURCE_STATE_COPY_SOURCE`. At this point, the render target has a `D3D12_RESOURCE_STATE_RENDER_TARGET` state, which allows it to be presented on the screen. We therefore need to transition it to the `D3D12_RESOURCE_STATE_COPY_DEST` so that the contents of the raytracing output can be copied to it. The copy itself is performed by `ID3D12GraphicsCommandList::CopyResource`. Once the copy is made, the render target is transitioned back to the `D3D12_RESOURCE_STATE_RENDER_TARGET` for display. [(code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/D3D12HelloTriangle.cpp#L440)

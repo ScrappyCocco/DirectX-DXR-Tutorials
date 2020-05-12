@@ -28,6 +28,10 @@ Note that you may need to retarget the Build Tools or the Windows 10 SDK in case
 
 If something doesn't work as expected fell free to [open an Issue](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/issues).
 
+## Tutorial list
+* [(0) Basic Dx12 Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/0-BasicDxTriangle): Is the basic rendering triangle made in Dx12, useful as starting point;
+* [(1) Nvidia - Raytraced Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/1-Dx12DXRTriangle): Raytracing version of the basic Dx12 triangle;
+
 ## Resources
 * [Microsoft DirectX 12 Samples](https://github.com/microsoft/DirectX-Graphics-Samples) -> [Raytracing Samples](https://github.com/microsoft/DirectX-Graphics-Samples/tree/master/Samples/Desktop/D3D12Raytracing);
 * [Microsoft DirectX Raytracing (DXR) Functional Spec](https://github.com/microsoft/DirectX-Specs/blob/master/d3d/Raytracing.md);
