@@ -4,7 +4,21 @@ This document is a summarize and a rework of the concepts of the Nvidia tutorial
 Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/author/mlefrancois/) and [Pascal Gautron](https://devblogs.nvidia.com/author/pgautron/) that made this tutorial, all this work is theirs, i just took it to change and summarize it a bit for educational purposes.
 
 ## Contents
-* [Introduction](#Introduction)
+- [Introduction](#introduction)
+- [Checking support](#checking-support)
+  - [Dx12 Feature Level](#dx12-feature-level)
+- [Acceleration Structures](#acceleration-structures)
+  - [Description of Acceleration Structures](#description-of-acceleration-structures)
+  - [Building the Acceleration Structures](#building-the-acceleration-structures)
+- [The Pipeline](#the-pipeline)
+  - [Shaders](#shaders)
+  - [Shaders bindings](#shaders-bindings)
+- [Raytracing Pipeline](#raytracing-pipeline)
+- [Resources](#resources)
+- [The Shader Binding Table](#the-shader-binding-table)
+  - [SBT Entry](#sbt-entry)
+  - [CreateShaderBindingTable](#createshaderbindingtable)
+- [Command List](#command-list)
 
 # Introduction
 As Nvidia says, this is only for educational purposes to showcase a basic integration of raytracing, a real integration would require additional levels of abstraction.
@@ -95,8 +109,8 @@ In a raytracing context, a ray traced to the scene can hit any object and thus t
 
 Two more shader types can optionally be used:
 
-* The intersection shader, which allows intersecting user-defined geometry. Using this shader requires modifying how the acceleration structures are built, and is beyond the scope of this tutorial. We will instead rely on the built-in triangle intersection shader provided by DXR;
-* The any hit shader is executed on each potential intersection: when searching for the hit point closest to the ray origin, several candidates may be found on the way. The any hit shader can typically be used to efficiently implement alpha-testing. If the alpha test fails, the ray traversal can continue without having to call **TraceRay()** again.
+* The **intersection shader**, which allows intersecting user-defined geometry. Using this shader requires modifying how the acceleration structures are built, and is beyond the scope of this tutorial. We will instead rely on the built-in triangle intersection shader provided by DXR;
+* The **any hit shader** is executed on each potential intersection: when searching for the hit point closest to the ray origin, several candidates may be found on the way. The any hit shader can typically be used to efficiently implement alpha-testing. If the alpha test fails, the ray traversal can continue without having to call **TraceRay()** again.
 
 ## Shaders
 In this tutorial we will create a pipeline containing only the 3 mandatory shader programs: a single ray generation, single miss and a single closest hit.
@@ -106,6 +120,8 @@ Shaders used:
 * [RayGen.hlsl](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/shaders/RayGen.hlsl): contains the ray generation program **RayGen()**. It also declares its access to the raytracing output buffer gOutput bound as a unordered access view (UAV), and the raytracing acceleration structure SceneBVH, bound as a shader resource view (SRV);
 * [Miss.hlsl](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/shaders/Miss.hlsl): defines the **Miss()** shader. This shader will be executed when no geometry is hit, and will write a constant color in the payload. Note that this shader takes the payload as a inout parameter. It will be provided to the shader automatically by DXR;
 * [Hit.hlsl](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/shaders/Hit.hlsl): contains a very simple closest hit shader **ClosestHit()**. It will be executed upon hitting the geometry (our triangle). As the miss shader, it takes the ray payload payload as a inout parameter. It also has a second parameter defining the intersection attributes as provided by the intersection shader, ie. the barycentric coordinates.
+
+You can read more about these shaders in [SHADERS.md](SHADERS.md).
 
 ## Shaders bindings
 Shaders usually require external data, such as textures, constant buffers etc. Those inputs are specified in the shader code, by binding data to a given register:
