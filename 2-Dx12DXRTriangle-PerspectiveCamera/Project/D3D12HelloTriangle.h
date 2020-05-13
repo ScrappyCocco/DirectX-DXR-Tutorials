@@ -148,7 +148,7 @@ private:
 	// #DXR Extra: Perspective Camera
 	void CreateCameraBuffer();
 	void UpdateCameraBuffer() const;
-	ComPtr< ID3D12Resource > m_cameraBuffer;
-	ComPtr< ID3D12DescriptorHeap > m_constHeap;
+	ComPtr<ID3D12Resource> m_cameraBuffer;
+	ComPtr<ID3D12DescriptorHeap> m_constHeap;
 	uint32_t m_cameraBufferSize = 0;
 };

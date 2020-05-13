@@ -1,7 +1,7 @@
 ![Screenshot of Dx12 basic triangle using Raytracing on a Perspective Camera](ReadmeMedia/screenshot.png)
 
-# [Nvidia] DirectX 12 Raytracing "HelloTriangle" - Perspective Camera
-This is the basic rendering triangle of tutorial 0 rendered using Raytracing, 
+# [Nvidia] DXR "HelloTriangle" - Perspective Camera
+This is the Raytracing triangle of Tutorial 1, extended using a more "natural" perspective camera.
 
 As in tutorial 1, you can switch between the standard rasterized version (default) and the raytraced version (the one in the screenshot) by pressing SPACE.
 

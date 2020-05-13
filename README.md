@@ -2,7 +2,9 @@
 Personal repository of tutorials and examples to understand the basics of DirectX 12 Raytracing (DXR).
 
 ## Description
-This is a personal repository to study and develop various tutorials about DirectX 12 Raytracing. Right now none of the tutorials is made by me, i just take and follow/study a tutorial and upload the result here, cleaning the code from unused functions, writing better includes and comments or stuff like that. I also make sure the project is still buildable and understandable as much as possible. 
+This is a personal repository to study and develop various tutorials about DirectX 12 Raytracing. Right now none of the tutorials is made by me, i just take and follow/study a tutorial and upload the result here, cleaning the code from unused functions, writing better includes and comments or stuff like that. I also make sure the project is still buildable and understandable as much as possible.
+
+I made this also because, from a *noob* prospective, lots of tutorials are full of unused variables, compilation errors, and stuff like that, and i wanted to provide clean resources anyone could consider to read/use.
 
 **The link to the official tutorial is always in the README of the project directory.**
 
