@@ -4,7 +4,19 @@ This document is a summarize and a rework of the concepts of the Nvidia tutorial
 Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/author/mlefrancois/) and [Pascal Gautron](https://devblogs.nvidia.com/author/pgautron/) that made this tutorial, all this work is theirs, i just took it to change and summarize it a bit for educational purposes.
 
 ## Contents
-
+- [Introduction](#introduction)
+- [Creating the Camera](#creating-the-camera)
+  - [Creating the Camera](#creating-the-camera-1)
+  - [Updating the Camera](#updating-the-camera)
+- [Updating Resources](#updating-resources)
+  - [ShaderResourceHeap](#shaderresourceheap)
+  - [CreateRayGenSignature](#createraygensignature)
+- [LoadAssets](#loadassets)
+- [CommandList](#commandlist)
+- [Shaders](#shaders)
+  - [shaders.hlsl](#shadershlsl)
+  - [RayGen.hlsl](#raygenhlsl)
+- [Further reading](#further-reading)
 
 # Introduction
 This document require that you understood the basic Raytracing flow made in [Tutorial 1](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/1-Dx12DXRTriangle), once you know the basics you can start to read how to edit the standard camera to a perspective camera.

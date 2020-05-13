@@ -9,10 +9,10 @@ RaytracingAccelerationStructure SceneBVH : register(t0);
 // #DXR Extra: Perspective Camera
 cbuffer CameraParams : register(b0)
 {
-	float4x4 view;
-	float4x4 projection;
-	float4x4 viewI;
-	float4x4 projectionI;
+    float4x4 view;
+    float4x4 projection;
+    float4x4 viewI;
+    float4x4 projectionI;
 }
 
 [shader("raygeneration")] void RayGen() {
@@ -27,7 +27,7 @@ cbuffer CameraParams : register(b0)
     float2 d = (((launchIndex.xy + 0.5f) / dims.xy) * 2.f - 1.f);
     // Define a ray, consisting of origin, direction, and the min-max distance
     // values
-	// #DXR Extra: Perspective Camera
+    // #DXR Extra: Perspective Camera
     RayDesc ray;
     ray.Origin = mul(viewI, float4(0, 0, 0, 1));
     float4 target = mul(projectionI, float4(d.x, -d.y, 1, 1));
