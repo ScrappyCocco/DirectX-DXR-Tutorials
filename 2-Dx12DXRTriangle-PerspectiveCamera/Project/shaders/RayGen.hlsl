@@ -28,10 +28,10 @@ cbuffer CameraParams : register(b0)
     // Define a ray, consisting of origin, direction, and the min-max distance
     // values
 	// #DXR Extra: Perspective Camera
-	RayDesc ray;
-	ray.Origin = mul(viewI, float4(0, 0, 0, 1));
-	float4 target = mul(projectionI, float4(d.x, -d.y, 1, 1));
-	ray.Direction = mul(viewI, float4(target.xyz, 0));
+    RayDesc ray;
+    ray.Origin = mul(viewI, float4(0, 0, 0, 1));
+    float4 target = mul(projectionI, float4(d.x, -d.y, 1, 1));
+    ray.Direction = mul(viewI, float4(target.xyz, 0));
     ray.TMin = 0;
     ray.TMax = 100000;
 
