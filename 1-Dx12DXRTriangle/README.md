@@ -1,4 +1,4 @@
-![Screenshot of Dx12 basic triangle](ReadmeMedia/screenshot.png)
+![Screenshot of Dx12 basic triangle using Raytracing](ReadmeMedia/screenshot.png)
 
 # [Nvidia] DirectX 12 Raytracing "HelloTriangle"
 This is the basic rendering triangle of tutorial 0 rendered using Raytracing, you can switch between the standard rasterized version (default, on the left) and the raytraced version (on the right) by pressing SPACE.
