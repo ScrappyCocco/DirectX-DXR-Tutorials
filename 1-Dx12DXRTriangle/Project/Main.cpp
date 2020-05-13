@@ -17,6 +17,6 @@ _Use_decl_annotations_
 
 int WINAPI WinMain(const HINSTANCE hInstance, HINSTANCE, LPSTR, const int nShowCmd)
 {
-	D3D12HelloTriangle sample(1280, 720, L"D3D12 Hello Triangle");
+	D3D12HelloTriangle sample(1280, 720, L"D3D12 Hello Triangle - Raytracing");
 	return Win32Application::Run(&sample, hInstance, nShowCmd);
 }
