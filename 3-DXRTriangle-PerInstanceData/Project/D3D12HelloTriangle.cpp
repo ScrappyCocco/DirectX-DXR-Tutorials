@@ -295,11 +295,6 @@ void D3D12HelloTriangle::LoadAssets()
 			0, &readRange, reinterpret_cast<void**>(&pVertexDataBegin)));
 		memcpy(pVertexDataBegin, triangleVertices, sizeof(triangleVertices));
 		m_vertexBuffer->Unmap(0, nullptr);
-
-		// Initialize the vertex buffer view.
-		m_vertexBufferView.BufferLocation = m_vertexBuffer->GetGPUVirtualAddress();
-		m_vertexBufferView.StrideInBytes = sizeof(Vertex);
-		m_vertexBufferView.SizeInBytes = vertexBufferSize;
 	}
 
 	// #DXR - Per Instance
@@ -1087,11 +1082,6 @@ void D3D12HelloTriangle::CreatePlaneVB()
 		0, &readRange, reinterpret_cast<void**>(&pVertexDataBegin)));
 	memcpy(pVertexDataBegin, planeVertices, sizeof(planeVertices));
 	m_planeBuffer->Unmap(0, nullptr);
-
-	// Initialize the vertex buffer view.
-	m_planeBufferView.BufferLocation = m_planeBuffer->GetGPUVirtualAddress();
-	m_planeBufferView.StrideInBytes = sizeof(Vertex);
-	m_planeBufferView.SizeInBytes = planeBufferSize;
 }
 
 //-----------------------------------------------------------------------------
