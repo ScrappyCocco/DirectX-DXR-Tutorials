@@ -1,5 +1,5 @@
 # DirectX 12 DXR Tutorials
-Personal repository of tutorials and examples to understand the basics of DirectX 12 Raytracing (DXR).
+Personal repository of tutorials and examples to understand the basics of DirectX 12 instructions and DirectX 12 Raytracing (DXR).
 
 ## Description
 This is a personal repository to study and develop various tutorials about DirectX 12 Raytracing. Right now none of the tutorials is made by me, i just take and follow/study a tutorial and upload the result here, cleaning the code from unused functions, writing better includes and comments or stuff like that. I also make sure the project is still buildable and understandable as much as possible.
