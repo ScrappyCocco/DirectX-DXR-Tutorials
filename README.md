@@ -10,7 +10,7 @@ I made this also because, from a *noob* point of view, lots of tutorials are ful
 
 I will also document some parts of the code using Markdown, so that someone who is new in the topic is able to read and understand the basic concepts just giving a look from the Repository.
 
-The tutorials are in order of increasing difficulty and complexity, and each one require you to understand what has been done in the previous ones.
+The tutorials are in order of increasing difficulty and complexity, and each one require you to understand what has been done in the previous ones. Also because every tutorial starts with the code of the previous one, adding or changing some functions.
 
 ## Requirements
 You need to have some knowledge of Dx12 programming or another low-level graphics api such as Vulkan, in order to understand the basic concepts of shader, pipeline, buffers, and such.
