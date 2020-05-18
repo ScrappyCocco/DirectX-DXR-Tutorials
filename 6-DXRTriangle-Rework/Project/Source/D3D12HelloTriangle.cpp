@@ -14,6 +14,7 @@
 #include "../../_externals/glm/glm/gtx/euler_angles.hpp"
 #include "D3D12HelloTriangle.h"
 #include <array>
+#include "DXSampleHelper.h"
 #include "Utils/AccelerationStructures.h"
 #include "Utils/RTPipeline.h"
 #include "Utils/Structs/ExportAssociation.h"
@@ -38,9 +39,11 @@ void D3D12HelloTriangle::OnInit()
 
 	// Debug Layer
 #ifdef _DEBUG
-	SampleFramework::ID3D12DebugPtr pDx12Debug;
+	SampleFramework::ID3D12Debug1Ptr pDx12Debug;
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&pDx12Debug))))
 	{
+		pDx12Debug->SetEnableGPUBasedValidation(true);
+		pDx12Debug->SetEnableSynchronizedCommandQueueValidation(true);
 		pDx12Debug->EnableDebugLayer();
 	}
 	
@@ -101,8 +104,8 @@ void D3D12HelloTriangle::OnRender()
 	mRotation += 0.005f;
 
 	// Let's raytrace
-	D3D12UtilContext.resourceBarrier(mpCmdList, mpOutputResource, D3D12_RESOURCE_STATE_COPY_SOURCE,
-	                D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	DirectXUtil::D3D12GraphicsContext::resourceBarrier(mpCmdList, mpOutputResource, D3D12_RESOURCE_STATE_COPY_SOURCE,
+	                                                   D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 	D3D12_DISPATCH_RAYS_DESC raytraceDesc = {};
 	raytraceDesc.Width = mSwapChainSize.x;
 	raytraceDesc.Height = mSwapChainSize.y;
@@ -114,13 +117,13 @@ void D3D12HelloTriangle::OnRender()
 	raytraceDesc.RayGenerationShaderRecord.SizeInBytes = mShaderTableEntrySize;
 
 	// Miss is the second entry in the shader-table
-	size_t missOffset = 1 * mShaderTableEntrySize;
+	const size_t missOffset = 1 * mShaderTableEntrySize;
 	raytraceDesc.MissShaderTable.StartAddress = mpShaderTable->GetGPUVirtualAddress() + missOffset;
 	raytraceDesc.MissShaderTable.StrideInBytes = mShaderTableEntrySize;
 	raytraceDesc.MissShaderTable.SizeInBytes = mShaderTableEntrySize * 2; // 2 miss-entries
 
 	// Hit is the fourth entry in the shader-table
-	size_t hitOffset = 3 * mShaderTableEntrySize;
+	const size_t hitOffset = 3 * mShaderTableEntrySize;
 	raytraceDesc.HitGroupTable.StartAddress = mpShaderTable->GetGPUVirtualAddress() + hitOffset;
 	raytraceDesc.HitGroupTable.StrideInBytes = mShaderTableEntrySize;
 	raytraceDesc.HitGroupTable.SizeInBytes = mShaderTableEntrySize * 8; // 8 hit-entries
@@ -133,10 +136,10 @@ void D3D12HelloTriangle::OnRender()
 	mpCmdList->DispatchRays(&raytraceDesc);
 
 	// Copy the results to the back-buffer
-	D3D12UtilContext.resourceBarrier(mpCmdList, mpOutputResource, D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-	                D3D12_RESOURCE_STATE_COPY_SOURCE);
-	D3D12UtilContext.resourceBarrier(mpCmdList, mFrameObjects[rtvIndex].pSwapChainBuffer, D3D12_RESOURCE_STATE_PRESENT,
-	                D3D12_RESOURCE_STATE_COPY_DEST);
+	DirectXUtil::D3D12GraphicsContext::resourceBarrier(mpCmdList, mpOutputResource, D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+	                                                   D3D12_RESOURCE_STATE_COPY_SOURCE);
+	DirectXUtil::D3D12GraphicsContext::resourceBarrier(mpCmdList, mFrameObjects[rtvIndex].pSwapChainBuffer, D3D12_RESOURCE_STATE_PRESENT,
+	                                                   D3D12_RESOURCE_STATE_COPY_DEST);
 	mpCmdList->CopyResource(mFrameObjects[rtvIndex].pSwapChainBuffer.Get(), mpOutputResource.Get());
 
 	EndFrame(rtvIndex);
@@ -167,7 +170,7 @@ void D3D12HelloTriangle::EndFrame(const uint32_t rtvIndex)
 	mpSwapChain->Present(0, 0);
 
 	// Prepare the command list for the next frame
-	uint32_t bufferIndex = mpSwapChain->GetCurrentBackBufferIndex();
+	const uint32_t bufferIndex = mpSwapChain->GetCurrentBackBufferIndex();
 
 	// Sync. We need to do this because the TLAS resources are not double-buffered and we are going to update them
 	mpFence->SetEventOnCompletion(mFenceValue, mFenceEvent);
@@ -234,7 +237,7 @@ void D3D12HelloTriangle::createRtPipelineState()
 	//  2 for shader config (shared between all programs. 1 for the config, 1 for association)
 	//  1 for pipeline config
 	//  1 for the global root signature
-	std::array<D3D12_STATE_SUBOBJECT, 16> subobjects;
+	std::array<D3D12_STATE_SUBOBJECT, 16> subobjects{};
 	uint32_t index = 0;
 
 	// Create the DXIL library
@@ -342,7 +345,7 @@ void D3D12HelloTriangle::createShaderTable()
 	mShaderTableEntrySize = D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES;
 	mShaderTableEntrySize += 8; // The hit shader constant-buffer descriptor
 	mShaderTableEntrySize = align_to(D3D12_RAYTRACING_SHADER_RECORD_BYTE_ALIGNMENT, mShaderTableEntrySize);
-	uint32_t shaderTableSize = mShaderTableEntrySize * 11;
+	const uint32_t shaderTableSize = mShaderTableEntrySize * 11;
 
 	// For simplicity, we create the shader-table on the upload heap. You can also create it on the default heap
 	mpShaderTable = DirectXUtil::AccelerationStructures::createBuffer(mpDevice, shaderTableSize, D3D12_RESOURCE_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ,
