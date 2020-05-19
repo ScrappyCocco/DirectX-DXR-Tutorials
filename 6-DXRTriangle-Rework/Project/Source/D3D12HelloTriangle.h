@@ -14,8 +14,6 @@
 #include "DXSample.h"
 
 #include "Dx12/InterfacePointers.h"
-#define GLM_FORCE_CTOR_INIT
-#define GLM_ENABLE_EXPERIMENTAL
 #include "../../_externals/glm/glm/glm.hpp"
 #include <vector>
 #include "Utils/D3D12GraphicsContext.h"

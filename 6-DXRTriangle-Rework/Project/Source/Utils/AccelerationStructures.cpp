@@ -198,9 +198,9 @@ void DirectXUtil::AccelerationStructures::buildTopLevelAS(SampleFramework::ID3D1
 	// The transformation matrices for the instances
 	glm::mat4 transformation[3];
 	const glm::mat4 rotationMat = glm::eulerAngleY(rotation);
-	transformation[0] = glm::mat4();
-	transformation[1] = translate(glm::mat4(), glm::vec3(-2, 0, 0)) * rotationMat;
-	transformation[2] = translate(glm::mat4(), glm::vec3(2, 0, 0)) * rotationMat;
+	transformation[0] = glm::mat4(1.0);
+	transformation[1] = translate(glm::mat4(1.0), glm::vec3(-2, 0, 0)) * rotationMat;
+	transformation[2] = translate(glm::mat4(1.0), glm::vec3(2, 0, 0)) * rotationMat;
 
 	// The InstanceContributionToHitGroupIndex is set based on the shader-table layout specified in createShaderTable()
 	// Create the desc for the triangle/plane instance

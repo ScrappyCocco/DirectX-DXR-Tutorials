@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include <dxgi1_4.h>
-
 class DXSample
 {
 public:
