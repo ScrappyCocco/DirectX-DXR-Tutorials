@@ -13,10 +13,21 @@ I will also document some parts of the code using Markdown, so that someone who 
 The tutorials are in order of increasing difficulty and complexity, and each one require you to understand what has been done in the previous ones. Also because every tutorial starts with the code of the previous one, adding or changing some functions.
 
 ## Requirements
+
+### Intro
 You need to have some knowledge of Dx12 programming or another low-level graphics api such as Vulkan, in order to understand the basic concepts of shader, pipeline, buffers, and such.
 
 I started this study and repository having some basic knowledge of Vulkan i made developing my small own engine, so i found Dx12 to be quite similar even with its own differences.
 
+### Externals
+From tutorial 6, also [glm](https://github.com/g-truc/glm) is necessary, so make sure that the folder `_externals/glm` is not empty. 
+
+If is empty, initialize the submodule with:
+```
+git submodule update --init --recursive
+```
+
+### Tools
 The tools you need are:
 
 * Windows 10 with the May 2019 Update (1903);
