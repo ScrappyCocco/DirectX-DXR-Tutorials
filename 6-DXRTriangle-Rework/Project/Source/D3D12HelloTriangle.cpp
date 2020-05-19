@@ -1,20 +1,10 @@
-//*********************************************************
-//
-// Copyright (c) Microsoft. All rights reserved.
-// This code is licensed under the MIT License (MIT).
-// THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-// ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-// IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-// PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-//
-//*********************************************************
+#include "D3D12HelloTriangle.h"
+
 #include "stdafx.h"
 #include "Win32Application.h"
 #include "../../_externals/glm/glm/gtx/transform.hpp"
 #include "../../_externals/glm/glm/gtx/euler_angles.hpp"
-#include "D3D12HelloTriangle.h"
 #include <array>
-#include "DXSampleHelper.h"
 #include "Utils/AccelerationStructures.h"
 #include "Utils/RTPipeline.h"
 #include "Utils/Structs/ExportAssociation.h"
@@ -46,38 +36,65 @@ void D3D12HelloTriangle::OnInit()
 		pDx12Debug->SetEnableSynchronizedCommandQueueValidation(true);
 		pDx12Debug->EnableDebugLayer();
 	}
-	
+
 #endif
 
 	// Create the DXGI factory
 	SampleFramework::IDXGIFactory4Ptr pDxgiFactory;
-	d3d_call(CreateDXGIFactory1(IID_PPV_ARGS(&pDxgiFactory)));
+	NV_D3D_CALL(CreateDXGIFactory1(IID_PPV_ARGS(&pDxgiFactory)));
 	mpDevice = D3D12UtilContext.createDevice(pDxgiFactory);
 	mpCmdQueue = D3D12UtilContext.createCommandQueue(mpDevice);
-	mpSwapChain = D3D12UtilContext.createDxgiSwapChain(pDxgiFactory, mHwnd, winWidth, winHeight, DXGI_FORMAT_R8G8B8A8_UNORM, mpCmdQueue);
+	mpSwapChain = D3D12UtilContext.createDxgiSwapChain(pDxgiFactory, mHwnd, winWidth, winHeight,
+	                                                   DXGI_FORMAT_R8G8B8A8_UNORM, mpCmdQueue);
 
 	// Create a RTV descriptor heap
-	mRtvHeap.pHeap = D3D12UtilContext.createDescriptorHeap(mpDevice, kRtvHeapSize, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, false);
+	mRtvHeap.pHeap = D3D12UtilContext.createDescriptorHeap(mpDevice, kRtvHeapSize, D3D12_DESCRIPTOR_HEAP_TYPE_RTV,
+	                                                       false);
 
 	// Create the per-frame objects
 	mFrameObjects.resize(DirectXUtil::D3D12GraphicsContext::getDefaultSwapChainBuffers());
 	for (uint32_t i = 0; i < mFrameObjects.size(); i++)
 	{
-		d3d_call(
-			mpDevice->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&mFrameObjects[i].
-				pCmdAllocator)));
-		d3d_call(mpSwapChain->GetBuffer(i, IID_PPV_ARGS(&mFrameObjects[i].pSwapChainBuffer)));
-		mFrameObjects[i].rtvHandle = DirectXUtil::D3D12GraphicsContext::createRTV(mpDevice, mFrameObjects[i].pSwapChainBuffer, mRtvHeap.pHeap,
-		                                                                          mRtvHeap.usedEntries, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB);
+		NV_D3D_CALL(
+			mpDevice->CreateCommandAllocator(
+				D3D12_COMMAND_LIST_TYPE_DIRECT,
+				IID_PPV_ARGS(
+					&mFrameObjects[i].pCmdAllocator
+				)
+			)
+		);
+
+		NV_D3D_CALL(
+			mpSwapChain->GetBuffer(
+				i,
+				IID_PPV_ARGS(
+					&mFrameObjects[i].pSwapChainBuffer
+				)
+			)
+		);
+
+		mFrameObjects[i].rtvHandle = DirectXUtil::D3D12GraphicsContext::createRTV(
+			mpDevice,
+			mFrameObjects[i].pSwapChainBuffer,
+			mRtvHeap.pHeap,
+			mRtvHeap.usedEntries,
+			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB
+		);
 	}
 
 	// Create the command-list
-	d3d_call(
-		mpDevice->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, mFrameObjects[0].pCmdAllocator.Get(), nullptr,
-			IID_PPV_ARGS(&mpCmdList)));
+	NV_D3D_CALL(
+		mpDevice->CreateCommandList(
+			0,
+			D3D12_COMMAND_LIST_TYPE_DIRECT,
+			mFrameObjects[0].pCmdAllocator.Get(),
+			nullptr,
+			IID_PPV_ARGS(&mpCmdList)
+		)
+	);
 
 	// Create a fence and the event
-	d3d_call(mpDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mpFence)));
+	NV_D3D_CALL(mpDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mpFence)));
 	mFenceEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
 
 	createAccelerationStructures();
@@ -100,20 +117,24 @@ void D3D12HelloTriangle::OnRender()
 	const uint32_t rtvIndex = BeginFrame();
 
 	// Refit the top-level acceleration structure
-	DirectXUtil::AccelerationStructures::buildTopLevelAS(mpDevice, mpCmdList, mpBottomLevelAS, mTlasSize, mRotation, true, mTopLevelBuffers);
+	DirectXUtil::AccelerationStructures::buildTopLevelAS(mpDevice, mpCmdList, mpBottomLevelAS, mTlasSize, mRotation,
+	                                                     true, mTopLevelBuffers);
 	mRotation += 0.005f;
 
 	// Let's raytrace
-	DirectXUtil::D3D12GraphicsContext::resourceBarrier(mpCmdList, mpOutputResource, D3D12_RESOURCE_STATE_COPY_SOURCE,
-	                                                   D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	DirectXUtil::D3D12GraphicsContext::resourceBarrier(
+		mpCmdList, mpOutputResource,
+		D3D12_RESOURCE_STATE_COPY_SOURCE,
+		D3D12_RESOURCE_STATE_UNORDERED_ACCESS
+	);
 	D3D12_DISPATCH_RAYS_DESC raytraceDesc = {};
 	raytraceDesc.Width = mSwapChainSize.x;
 	raytraceDesc.Height = mSwapChainSize.y;
 	raytraceDesc.Depth = 1;
 
 	// RayGen is the first entry in the shader-table
-	raytraceDesc.RayGenerationShaderRecord.StartAddress = mpShaderTable->GetGPUVirtualAddress() + 0 *
-		mShaderTableEntrySize;
+	raytraceDesc.RayGenerationShaderRecord.StartAddress =
+		mpShaderTable->GetGPUVirtualAddress() + 0 * mShaderTableEntrySize;
 	raytraceDesc.RayGenerationShaderRecord.SizeInBytes = mShaderTableEntrySize;
 
 	// Miss is the second entry in the shader-table
@@ -136,10 +157,18 @@ void D3D12HelloTriangle::OnRender()
 	mpCmdList->DispatchRays(&raytraceDesc);
 
 	// Copy the results to the back-buffer
-	DirectXUtil::D3D12GraphicsContext::resourceBarrier(mpCmdList, mpOutputResource, D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-	                                                   D3D12_RESOURCE_STATE_COPY_SOURCE);
-	DirectXUtil::D3D12GraphicsContext::resourceBarrier(mpCmdList, mFrameObjects[rtvIndex].pSwapChainBuffer, D3D12_RESOURCE_STATE_PRESENT,
-	                                                   D3D12_RESOURCE_STATE_COPY_DEST);
+	DirectXUtil::D3D12GraphicsContext::resourceBarrier(
+		mpCmdList,
+		mpOutputResource,
+		D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+		D3D12_RESOURCE_STATE_COPY_SOURCE
+	);
+	DirectXUtil::D3D12GraphicsContext::resourceBarrier(
+		mpCmdList,
+		mFrameObjects[rtvIndex].pSwapChainBuffer,
+		D3D12_RESOURCE_STATE_PRESENT,
+		D3D12_RESOURCE_STATE_COPY_DEST
+	);
 	mpCmdList->CopyResource(mFrameObjects[rtvIndex].pSwapChainBuffer.Get(), mpOutputResource.Get());
 
 	EndFrame(rtvIndex);
@@ -158,14 +187,18 @@ uint32_t D3D12HelloTriangle::BeginFrame() const
 {
 	// Bind the descriptor heaps
 	ID3D12DescriptorHeap* heaps[] = {mpSrvUavHeap.Get()};
-	mpCmdList->SetDescriptorHeaps(arraysize(heaps), heaps);
+	mpCmdList->SetDescriptorHeaps(NV_ARRAYSIZE(heaps), heaps);
 	return mpSwapChain->GetCurrentBackBufferIndex();
 }
 
 void D3D12HelloTriangle::EndFrame(const uint32_t rtvIndex)
 {
-	DirectXUtil::D3D12GraphicsContext::resourceBarrier(mpCmdList, mFrameObjects[rtvIndex].pSwapChainBuffer, D3D12_RESOURCE_STATE_COPY_DEST,
-	                                                   D3D12_RESOURCE_STATE_PRESENT);
+	DirectXUtil::D3D12GraphicsContext::resourceBarrier(
+		mpCmdList,
+		mFrameObjects[rtvIndex].pSwapChainBuffer,
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		D3D12_RESOURCE_STATE_PRESENT
+	);
 	mFenceValue = DirectXUtil::D3D12GraphicsContext::submitCommandList(mpCmdList, mpCmdQueue, mpFence, mFenceValue);
 	mpSwapChain->Present(0, 0);
 
@@ -193,9 +226,14 @@ SampleFramework::ID3D12RootSignaturePtr D3D12HelloTriangle::createRootSignature(
 		return nullptr;
 	}
 	SampleFramework::ID3D12RootSignaturePtr pRootSig;
-	d3d_call(
-		pDevice->CreateRootSignature(0, pSigBlob->GetBufferPointer(), pSigBlob->GetBufferSize(), IID_PPV_ARGS(&pRootSig)
-		));
+	NV_D3D_CALL(
+		pDevice->CreateRootSignature(
+			0,
+			pSigBlob->GetBufferPointer(),
+			pSigBlob->GetBufferSize(),
+			IID_PPV_ARGS(&pRootSig)
+		)
+	);
 	return pRootSig;
 }
 
@@ -207,17 +245,21 @@ void D3D12HelloTriangle::createAccelerationStructures()
 
 	// The first bottom-level buffer is for the plane and the triangle
 	const uint32_t vertexCount[] = {3, 6}; // Triangle has 3 vertices, plane has 6
-	bottomLevelBuffers[0] = DirectXUtil::AccelerationStructures::createBottomLevelAS(mpDevice, mpCmdList, mpVertexBuffer, vertexCount, 2);
+	bottomLevelBuffers[0] = DirectXUtil::AccelerationStructures::createBottomLevelAS(
+		mpDevice, mpCmdList, mpVertexBuffer, vertexCount, 2);
 	mpBottomLevelAS[0] = bottomLevelBuffers[0].pResult;
 
 	// The second bottom-level buffer is for the triangle only
-	bottomLevelBuffers[1] = DirectXUtil::AccelerationStructures::createBottomLevelAS(mpDevice, mpCmdList, mpVertexBuffer, vertexCount, 1);
+	bottomLevelBuffers[1] = DirectXUtil::AccelerationStructures::createBottomLevelAS(
+		mpDevice, mpCmdList, mpVertexBuffer, vertexCount, 1);
 	mpBottomLevelAS[1] = bottomLevelBuffers[1].pResult;
 
 	// Create the TLAS
-	DirectXUtil::AccelerationStructures::buildTopLevelAS(mpDevice, mpCmdList, mpBottomLevelAS, mTlasSize, false, 0, mTopLevelBuffers);
+	DirectXUtil::AccelerationStructures::buildTopLevelAS(mpDevice, mpCmdList, mpBottomLevelAS, mTlasSize, false, 0,
+	                                                     mTopLevelBuffers);
 
-	// The tutorial doesn't have any resource lifetime management, so we flush and sync here. This is not required by the DXR spec - you can submit the list whenever you like as long as you take care of the resources lifetime.
+	// The tutorial doesn't have any resource lifetime management, so we flush and sync here.
+	// This is not required by the DXR spec - you can submit the list whenever you like as long as you take care of the resources lifetime.
 	mFenceValue = DirectXUtil::D3D12GraphicsContext::submitCommandList(mpCmdList, mpCmdQueue, mpFence, mFenceValue);
 	mpFence->SetEventOnCompletion(mFenceValue, mFenceEvent);
 	WaitForSingleObject(mFenceEvent, INFINITE);
@@ -243,37 +285,45 @@ void D3D12HelloTriangle::createRtPipelineState()
 	// Create the DXIL library
 	DirectXUtil::Structs::DxilLibrary dxilLib = DirectXUtil::RTPipeline::createDxilLibrary();
 	subobjects[index++] = dxilLib.stateSubobject; // 0 Library
-	
+
 	// Create the triangle HitProgram
-	DirectXUtil::Structs::HitProgram triHitProgram(nullptr, DirectXUtil::RTPipeline::kTriangleChs, DirectXUtil::RTPipeline::kTriHitGroup);
+	DirectXUtil::Structs::HitProgram triHitProgram(nullptr, DirectXUtil::RTPipeline::kTriangleChs,
+	                                               DirectXUtil::RTPipeline::kTriHitGroup);
 	subobjects[index++] = triHitProgram.subObject; // 1 Triangle Hit Group
 
 	// Create the plane HitProgram
-	DirectXUtil::Structs::HitProgram planeHitProgram(nullptr, DirectXUtil::RTPipeline::kPlaneChs, DirectXUtil::RTPipeline::kPlaneHitGroup);
+	DirectXUtil::Structs::HitProgram planeHitProgram(nullptr, DirectXUtil::RTPipeline::kPlaneChs,
+	                                                 DirectXUtil::RTPipeline::kPlaneHitGroup);
 	subobjects[index++] = planeHitProgram.subObject; // 2 Plant Hit Group
 
 	// Create the shadow-ray hit group
-	DirectXUtil::Structs::HitProgram shadowHitProgram(nullptr, DirectXUtil::RTPipeline::kShadowChs, DirectXUtil::RTPipeline::kShadowHitGroup);
+	DirectXUtil::Structs::HitProgram shadowHitProgram(nullptr, DirectXUtil::RTPipeline::kShadowChs,
+	                                                  DirectXUtil::RTPipeline::kShadowHitGroup);
 	subobjects[index++] = shadowHitProgram.subObject; // 3 Shadow Hit Group
 
 	// Create the ray-gen root-signature and association
-	DirectXUtil::Structs::LocalRootSignature rgsRootSignature(mpDevice, DirectXUtil::RTPipeline::createRayGenRootDesc().desc);
+	DirectXUtil::Structs::LocalRootSignature rgsRootSignature(
+		mpDevice, DirectXUtil::RTPipeline::createRayGenRootDesc().desc);
 	subobjects[index] = rgsRootSignature.subobject; // 4 Ray Gen Root Sig
 
 	uint32_t rgsRootIndex = index++; // 4
-	DirectXUtil::Structs::ExportAssociation rgsRootAssociation(&DirectXUtil::RTPipeline::kRayGenShader, 1, &(subobjects[rgsRootIndex]));
+	DirectXUtil::Structs::ExportAssociation rgsRootAssociation(&DirectXUtil::RTPipeline::kRayGenShader, 1,
+	                                                           &(subobjects[rgsRootIndex]));
 	subobjects[index++] = rgsRootAssociation.subobject; // 5 Associate Root Sig to RGS
 
 	// Create the tri hit root-signature and association
-	DirectXUtil::Structs::LocalRootSignature triHitRootSignature(mpDevice, DirectXUtil::RTPipeline::createTriangleHitRootDesc().desc);
+	DirectXUtil::Structs::LocalRootSignature triHitRootSignature(
+		mpDevice, DirectXUtil::RTPipeline::createTriangleHitRootDesc().desc);
 	subobjects[index] = triHitRootSignature.subobject; // 6 Triangle Hit Root Sig
 
 	uint32_t triHitRootIndex = index++; // 6
-	DirectXUtil::Structs::ExportAssociation triHitRootAssociation(&DirectXUtil::RTPipeline::kTriangleChs, 1, &(subobjects[triHitRootIndex]));
+	DirectXUtil::Structs::ExportAssociation triHitRootAssociation(&DirectXUtil::RTPipeline::kTriangleChs, 1,
+	                                                              &(subobjects[triHitRootIndex]));
 	subobjects[index++] = triHitRootAssociation.subobject; // 7 Associate Triangle Root Sig to Triangle Hit Group
 
 	// Create the plane hit root-signature and association
-	DirectXUtil::Structs::LocalRootSignature planeHitRootSignature(mpDevice, DirectXUtil::RTPipeline::createPlaneHitRootDesc().desc);
+	DirectXUtil::Structs::LocalRootSignature planeHitRootSignature(
+		mpDevice, DirectXUtil::RTPipeline::createPlaneHitRootDesc().desc);
 	subobjects[index] = planeHitRootSignature.subobject; // 8 Plane Hit Root Sig
 
 	uint32_t planeHitRootIndex = index++; // 8
@@ -288,8 +338,10 @@ void D3D12HelloTriangle::createRtPipelineState()
 	subobjects[index] = emptyRootSignature.subobject; // 10 Empty Root Sig for Plane Hit Group and Miss
 
 	uint32_t emptyRootIndex = index++; // 10
-	const WCHAR* emptyRootExport[] = {DirectXUtil::RTPipeline::kMissShader, DirectXUtil::RTPipeline::kShadowChs, DirectXUtil::RTPipeline::kShadowMiss};
-	DirectXUtil::Structs::ExportAssociation emptyRootAssociation(emptyRootExport, arraysize(emptyRootExport),
+	const WCHAR* emptyRootExport[] = {
+		DirectXUtil::RTPipeline::kMissShader, DirectXUtil::RTPipeline::kShadowChs, DirectXUtil::RTPipeline::kShadowMiss
+	};
+	DirectXUtil::Structs::ExportAssociation emptyRootAssociation(emptyRootExport, NV_ARRAYSIZE(emptyRootExport),
 	                                                             &(subobjects[emptyRootIndex]));
 	subobjects[index++] = emptyRootAssociation.subobject;
 	// 11 Associate empty root sig to Plane Hit Group and Miss shader
@@ -300,11 +352,18 @@ void D3D12HelloTriangle::createRtPipelineState()
 
 	uint32_t primaryShaderConfigIndex = index++;
 	const WCHAR* primaryShaderExports[] = {
-		DirectXUtil::RTPipeline::kRayGenShader, DirectXUtil::RTPipeline::kMissShader, DirectXUtil::RTPipeline::kTriangleChs, DirectXUtil::RTPipeline::kPlaneChs, DirectXUtil::RTPipeline::kShadowMiss, DirectXUtil::RTPipeline::kShadowChs
+		DirectXUtil::RTPipeline::kRayGenShader,
+		DirectXUtil::RTPipeline::kMissShader,
+		DirectXUtil::RTPipeline::kTriangleChs,
+		DirectXUtil::RTPipeline::kPlaneChs,
+		DirectXUtil::RTPipeline::kShadowMiss,
+		DirectXUtil::RTPipeline::kShadowChs
 	};
-	DirectXUtil::Structs::ExportAssociation primaryConfigAssociation(primaryShaderExports,
-	                                                                 arraysize(primaryShaderExports),
-	                                                                 &(subobjects[primaryShaderConfigIndex]));
+	DirectXUtil::Structs::ExportAssociation primaryConfigAssociation(
+		primaryShaderExports,
+		NV_ARRAYSIZE(primaryShaderExports),
+		&(subobjects[primaryShaderConfigIndex])
+	);
 	subobjects[index++] = primaryConfigAssociation.subobject; // 13 Associate shader config to all programs
 
 	// Create the pipeline config
@@ -323,7 +382,7 @@ void D3D12HelloTriangle::createRtPipelineState()
 	desc.pSubobjects = subobjects.data();
 	desc.Type = D3D12_STATE_OBJECT_TYPE_RAYTRACING_PIPELINE;
 
-	d3d_call(mpDevice->CreateStateObject(&desc, IID_PPV_ARGS(&mpPipelineState)));
+	NV_D3D_CALL(mpDevice->CreateStateObject(&desc, IID_PPV_ARGS(&mpPipelineState)));
 }
 
 void D3D12HelloTriangle::createShaderTable()
@@ -344,24 +403,29 @@ void D3D12HelloTriangle::createShaderTable()
 	// Calculate the size and create the buffer
 	mShaderTableEntrySize = D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES;
 	mShaderTableEntrySize += 8; // The hit shader constant-buffer descriptor
-	mShaderTableEntrySize = align_to(D3D12_RAYTRACING_SHADER_RECORD_BYTE_ALIGNMENT, mShaderTableEntrySize);
+	mShaderTableEntrySize = NV_ALIGN_TO(D3D12_RAYTRACING_SHADER_RECORD_BYTE_ALIGNMENT, mShaderTableEntrySize);
 	const uint32_t shaderTableSize = mShaderTableEntrySize * 11;
 
 	// For simplicity, we create the shader-table on the upload heap. You can also create it on the default heap
-	mpShaderTable = DirectXUtil::AccelerationStructures::createBuffer(mpDevice, shaderTableSize, D3D12_RESOURCE_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ,
-	                                                                  DirectXUtil::AccelerationStructures::kUploadHeapProps);
+	mpShaderTable = DirectXUtil::AccelerationStructures::createBuffer(
+		mpDevice, shaderTableSize,
+		D3D12_RESOURCE_FLAG_NONE,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		DirectXUtil::AccelerationStructures::kUploadHeapProps
+	);
 
 	// Map the buffer
 	uint8_t* pData;
-	d3d_call(mpShaderTable->Map(0, nullptr, (void**)&pData));
+	NV_D3D_CALL(mpShaderTable->Map(0, nullptr, reinterpret_cast<void**>(&pData)));
 
 	SampleFramework::ID3D12StateObjectPropertiesPtr pRtsoProps;
 	mpPipelineState->QueryInterface(IID_PPV_ARGS(&pRtsoProps));
 
 	// Entry 0 - ray-gen program ID and descriptor data
-	memcpy(pData, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kRayGenShader), D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
-	uint64_t heapStart = mpSrvUavHeap->GetGPUDescriptorHandleForHeapStart().ptr;
-	*(uint64_t*)(pData + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = heapStart;
+	memcpy(pData, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kRayGenShader),
+	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
+	const uint64_t heapStart = mpSrvUavHeap->GetGPUDescriptorHandleForHeapStart().ptr;
+	*reinterpret_cast<uint64_t*>(pData + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = heapStart;
 
 	// Entry 1 - primary ray miss
 	memcpy(pData + mShaderTableEntrySize, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kMissShader),
@@ -373,50 +437,61 @@ void D3D12HelloTriangle::createShaderTable()
 
 	// Entry 3 - Triangle 0, primary ray. ProgramID and constant-buffer data
 	uint8_t* pEntry3 = pData + mShaderTableEntrySize * 3;
-	memcpy(pEntry3, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kTriHitGroup), D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
-	assert(((uint64_t)(pEntry3 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) % 8) == 0);
+	memcpy(pEntry3, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kTriHitGroup),
+	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
+	assert((reinterpret_cast<uint64_t>(pEntry3 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) % 8) == 0);
 	// Root descriptor must be stored at an 8-byte aligned address
-	*(D3D12_GPU_VIRTUAL_ADDRESS*)(pEntry3 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = mpConstantBuffer[0]->
+	*reinterpret_cast<D3D12_GPU_VIRTUAL_ADDRESS*>(pEntry3 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = mpConstantBuffer[0]
+		->
 		GetGPUVirtualAddress();
 
 	// Entry 4 - Triangle 0, shadow ray. ProgramID only
 	uint8_t* pEntry4 = pData + mShaderTableEntrySize * 4;
-	memcpy(pEntry4, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kShadowHitGroup), D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
+	memcpy(pEntry4, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kShadowHitGroup),
+	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
 
 	// Entry 5 - Plane, primary ray. ProgramID only and the TLAS SRV
 	uint8_t* pEntry5 = pData + mShaderTableEntrySize * 5;
-	memcpy(pEntry5, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kPlaneHitGroup), D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
-	*(uint64_t*)(pEntry5 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = heapStart + mpDevice->
+	memcpy(pEntry5, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kPlaneHitGroup),
+	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
+	*reinterpret_cast<uint64_t*>(pEntry5 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = heapStart + mpDevice->
 		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	// The SRV comes directly after the program id
 
 	// Entry 6 - Plane, shadow ray
 	uint8_t* pEntry6 = pData + mShaderTableEntrySize * 6;
-	memcpy(pEntry6, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kShadowHitGroup), D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
+	memcpy(pEntry6, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kShadowHitGroup),
+	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
 
 	// Entry 7 - Triangle 1, primary ray. ProgramID and constant-buffer data
 	uint8_t* pEntry7 = pData + mShaderTableEntrySize * 7;
-	memcpy(pEntry7, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kTriHitGroup), D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
-	assert(((uint64_t)(pEntry7 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) % 8) == 0);
+	memcpy(pEntry7, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kTriHitGroup),
+	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
+	assert((reinterpret_cast<uint64_t>(pEntry7 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) % 8) == 0);
 	// Root descriptor must be stored at an 8-byte aligned address
-	*(D3D12_GPU_VIRTUAL_ADDRESS*)(pEntry7 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = mpConstantBuffer[1]->
+	*reinterpret_cast<D3D12_GPU_VIRTUAL_ADDRESS*>(pEntry7 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = mpConstantBuffer[1]
+		->
 		GetGPUVirtualAddress();
 
 	// Entry 8 - Triangle 1, shadow ray. ProgramID only
 	uint8_t* pEntry8 = pData + mShaderTableEntrySize * 8;
-	memcpy(pEntry8, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kShadowHitGroup), D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
+	memcpy(pEntry8, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kShadowHitGroup),
+	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
 
 	// Entry 9 - Triangle 2, primary ray. ProgramID and constant-buffer data
 	uint8_t* pEntry9 = pData + mShaderTableEntrySize * 9;
-	memcpy(pEntry9, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kTriHitGroup), D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
-	assert(((uint64_t)(pEntry9 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) % 8) == 0);
+	memcpy(pEntry9, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kTriHitGroup),
+	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
+	assert((reinterpret_cast<uint64_t>(pEntry9 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) % 8) == 0);
 	// Root descriptor must be stored at an 8-byte aligned address
-	*(D3D12_GPU_VIRTUAL_ADDRESS*)(pEntry9 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = mpConstantBuffer[2]->
+	*reinterpret_cast<D3D12_GPU_VIRTUAL_ADDRESS*>(pEntry9 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = mpConstantBuffer[2]
+		->
 		GetGPUVirtualAddress();
 
 	// Entry 10 - Triangle 2, shadow ray. ProgramID only
 	uint8_t* pEntry10 = pData + mShaderTableEntrySize * 10;
-	memcpy(pEntry10, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kShadowHitGroup), D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
+	memcpy(pEntry10, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kShadowHitGroup),
+	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
 
 	// Unmap
 	mpShaderTable->Unmap(0, nullptr);
@@ -436,9 +511,16 @@ void D3D12HelloTriangle::createShaderResources()
 	resDesc.MipLevels = 1;
 	resDesc.SampleDesc.Count = 1;
 	resDesc.Width = mSwapChainSize.x;
-	d3d_call(
-		mpDevice->CreateCommittedResource(&DirectXUtil::AccelerationStructures::kDefaultHeapProps, D3D12_HEAP_FLAG_NONE, &resDesc,
-			D3D12_RESOURCE_STATE_COPY_SOURCE, nullptr, IID_PPV_ARGS(&mpOutputResource)));
+	NV_D3D_CALL(
+		mpDevice->CreateCommittedResource(
+			&DirectXUtil::AccelerationStructures::kDefaultHeapProps,
+			D3D12_HEAP_FLAG_NONE,
+			&resDesc,
+			D3D12_RESOURCE_STATE_COPY_SOURCE,
+			nullptr,
+			IID_PPV_ARGS(&mpOutputResource)
+		)
+	);
 	// Starting as copy-source to simplify onFrameRender()
 
 	// Create an SRV/UAV descriptor heap. Need 2 entries - 1 SRV for the scene and 1 UAV for the output
@@ -447,8 +529,12 @@ void D3D12HelloTriangle::createShaderResources()
 	// Create the UAV. Based on the root signature we created it should be the first entry
 	D3D12_UNORDERED_ACCESS_VIEW_DESC uavDesc = {};
 	uavDesc.ViewDimension = D3D12_UAV_DIMENSION_TEXTURE2D;
-	mpDevice->CreateUnorderedAccessView(mpOutputResource.Get(), nullptr, &uavDesc,
-	                                    mpSrvUavHeap->GetCPUDescriptorHandleForHeapStart());
+	mpDevice->CreateUnorderedAccessView(
+		mpOutputResource.Get(),
+		nullptr,
+		&uavDesc,
+		mpSrvUavHeap->GetCPUDescriptorHandleForHeapStart()
+	);
 
 	// Create the TLAS SRV right after the UAV. Note that we are using a different SRV desc here
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -483,10 +569,11 @@ void D3D12HelloTriangle::createConstantBuffers()
 	for (uint32_t i = 0; i < 3; i++)
 	{
 		const uint32_t bufferSize = sizeof(glm::vec4) * 3;
-		mpConstantBuffer[i] = DirectXUtil::AccelerationStructures::createBuffer(mpDevice, bufferSize, D3D12_RESOURCE_FLAG_NONE,
-		                                   D3D12_RESOURCE_STATE_GENERIC_READ, DirectXUtil::AccelerationStructures::kUploadHeapProps);
+		mpConstantBuffer[i] = DirectXUtil::AccelerationStructures::createBuffer(
+			mpDevice, bufferSize, D3D12_RESOURCE_FLAG_NONE,
+			D3D12_RESOURCE_STATE_GENERIC_READ, DirectXUtil::AccelerationStructures::kUploadHeapProps);
 		uint8_t* pData;
-		d3d_call(mpConstantBuffer[i]->Map(0, nullptr, (void**)&pData));
+		NV_D3D_CALL(mpConstantBuffer[i]->Map(0, nullptr, reinterpret_cast<void**>(&pData)));
 		memcpy(pData, &bufferData[i * 3], sizeof(bufferData));
 		mpConstantBuffer[i]->Unmap(0, nullptr);
 	}

@@ -22,8 +22,8 @@ DirectXUtil::Structs::DxilLibrary DirectXUtil::RTPipeline::createDxilLibrary()
 {
 	// Compile the shader
 	const SampleFramework::IDxcBlobPtr pRayGenShader = compileLibrary(L"shaders/Shaders.hlsl", L"lib_6_3");
-	const WCHAR* entryPoints[] = { kRayGenShader, kMissShader, kPlaneChs, kTriangleChs, kShadowMiss, kShadowChs };
-	return DirectXUtil::Structs::DxilLibrary(pRayGenShader, entryPoints, arraysize(entryPoints));
+	const WCHAR* entryPoints[] = {kRayGenShader, kMissShader, kPlaneChs, kTriangleChs, kShadowMiss, kShadowChs};
+	return DirectXUtil::Structs::DxilLibrary(pRayGenShader, entryPoints, NV_ARRAYSIZE(entryPoints));
 }
 
 SampleFramework::IDxcBlobPtr DirectXUtil::RTPipeline::compileLibrary(const WCHAR* filename, const WCHAR* targetString)
@@ -36,38 +36,45 @@ SampleFramework::IDxcBlobPtr DirectXUtil::RTPipeline::compileLibrary(const WCHAR
 	ThrowIfFailed(gDxcDllHelper.CreateInstance(CLSID_DxcLibrary, pLibrary.GetAddressOf()));
 
 	// Open and read the file
-	std::ifstream shaderFile(filename);
+	const std::ifstream shaderFile(filename);
 	if (shaderFile.good() == false)
 	{
 		ThrowError("Can't open file " + DXSample::wstring_2_string(std::wstring(filename)));
-		return nullptr;
 	}
 	std::stringstream strStream;
 	strStream << shaderFile.rdbuf();
-	std::string shader = strStream.str();
+	const std::string shader = strStream.str();
 
 	// Create blob from the string
 	SampleFramework::IDxcBlobEncodingPtr pTextBlob;
 	ThrowIfFailed(
-		pLibrary->CreateBlobWithEncodingFromPinned(LPBYTE(shader.c_str()), static_cast<uint32_t>(shader.size()), 0, &
-			pTextBlob));
+		pLibrary->CreateBlobWithEncodingFromPinned(
+			LPBYTE(shader.c_str()),
+			static_cast<uint32_t>(shader.size()),
+			0, &pTextBlob
+		)
+	);
 
 	// Compile
 	SampleFramework::IDxcOperationResultPtr pResult;
 	ThrowIfFailed(
-		pCompiler->Compile(pTextBlob.Get(), filename, L"", targetString, nullptr, 0, nullptr, 0, nullptr, &pResult));
+		pCompiler->Compile(
+			pTextBlob.Get(),
+			filename,
+			L"",
+			targetString,
+			nullptr,
+			0,
+			nullptr,
+			0,
+			nullptr,
+			&pResult
+		)
+	);
 
 	// Verify the result
 	HRESULT resultCode;
 	ThrowIfFailed(pResult->GetStatus(&resultCode));
-	if (FAILED(resultCode))
-	{
-		SampleFramework::IDxcBlobEncodingPtr pError;
-		ThrowIfFailed(pResult->GetErrorBuffer(&pError));
-		const std::string log = DXSample::convertBlobToString(pError.Get());
-		ThrowError("Compiler error:\n" + log);
-		return nullptr;
-	}
 
 	SampleFramework::IDxcBlobPtr pBlob;
 

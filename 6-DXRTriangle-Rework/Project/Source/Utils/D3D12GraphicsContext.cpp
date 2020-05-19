@@ -8,7 +8,8 @@ uint32_t DirectXUtil::D3D12GraphicsContext::getDefaultSwapChainBuffers()
 }
 
 SampleFramework::IDXGISwapChain3Ptr DirectXUtil::D3D12GraphicsContext::createDxgiSwapChain(
-	SampleFramework::IDXGIFactory4Ptr pFactory, const HWND hwnd, const uint32_t width, const uint32_t height, const DXGI_FORMAT format,
+	SampleFramework::IDXGIFactory4Ptr pFactory, const HWND hwnd, const uint32_t width, const uint32_t height,
+	const DXGI_FORMAT format,
 	SampleFramework::ID3D12CommandQueuePtr pCommandQueue) const
 {
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
@@ -33,10 +34,6 @@ SampleFramework::IDXGISwapChain3Ptr DirectXUtil::D3D12GraphicsContext::createDxg
 	);
 
 	ThrowIfFailed(hr, "Failed to create the swap-chain");
-	if (FAILED(hr))
-	{
-		return nullptr;
-	}
 
 	SampleFramework::IDXGISwapChain3Ptr pSwapChain3;
 	ThrowIfFailed(pSwapChain->QueryInterface(IID_PPV_ARGS(&pSwapChain3)), "Failed to QueryInterface on swap-chain");
@@ -137,7 +134,8 @@ SampleFramework::ID3D12DescriptorHeapPtr DirectXUtil::D3D12GraphicsContext::crea
 D3D12_CPU_DESCRIPTOR_HANDLE DirectXUtil::D3D12GraphicsContext::createRTV(SampleFramework::ID3D12Device5Ptr pDevice,
                                                                          SampleFramework::ID3D12ResourcePtr pResource,
                                                                          SampleFramework::ID3D12DescriptorHeapPtr pHeap,
-                                                                         uint32_t& usedHeapEntries, const DXGI_FORMAT format)
+                                                                         uint32_t& usedHeapEntries,
+                                                                         const DXGI_FORMAT format)
 {
 	D3D12_RENDER_TARGET_VIEW_DESC desc = {};
 	desc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;

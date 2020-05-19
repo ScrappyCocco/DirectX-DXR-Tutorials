@@ -1,15 +1,7 @@
-//*********************************************************
-//
-// Copyright (c) Microsoft. All rights reserved.
-// This code is licensed under the MIT License (MIT).
-// THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-// ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-// IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-// PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-//
-//*********************************************************
-
 #pragma once
+
+#include <dxgi1_6.h>
+#include <string>
 
 class DXSample
 {
@@ -45,7 +37,7 @@ public:
 	static std::string wstring_2_string(const std::wstring& ws);
 
 	// Convert a blob to at string
-	template<class BlotType>
+	template <class BlotType>
 	static std::string convertBlobToString(BlotType* pBlob)
 	{
 		std::vector<char> infoLog(pBlob->GetBufferSize() + 1);
@@ -53,6 +45,7 @@ public:
 		infoLog[pBlob->GetBufferSize()] = 0;
 		return std::string(infoLog.data());
 	}
+
 protected:
 	void SetCustomWindowText(LPCWSTR text) const;
 
@@ -70,9 +63,9 @@ protected:
 	static void d3dTraceHR(const std::string& msg, HRESULT hr);
 
 	//Define NVIDIA utils
-#define d3d_call(a) {HRESULT hr_ = a; if(FAILED(hr_)) { d3dTraceHR( #a, hr_); }}
-#define arraysize(a) (sizeof(a)/sizeof(a[0]))
-#define align_to(_alignment, _val) (((_val + _alignment - 1) / _alignment) * _alignment)
+#define NV_D3D_CALL(a) {HRESULT hr_ = a; if(FAILED(hr_)) { d3dTraceHR( #a, hr_); }}
+#define NV_ARRAYSIZE(a) (sizeof(a)/sizeof(a[0]))
+#define NV_ALIGN_TO(_alignment, _val) (((_val + _alignment - 1) / _alignment) * _alignment)
 
 private:
 	// Window title.

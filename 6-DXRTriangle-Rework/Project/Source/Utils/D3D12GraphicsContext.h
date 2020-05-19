@@ -19,7 +19,8 @@ namespace DirectXUtil
 			SampleFramework::ID3D12CommandQueuePtr pCommandQueue
 		) const;
 
-		static void GetHardwareAdapter(_In_ IDXGIFactory2* pFactory,
+		static void GetHardwareAdapter(
+			_In_ IDXGIFactory2* pFactory,
 			_Outptr_result_maybenull_ IDXGIAdapter1** ppAdapter
 		);
 

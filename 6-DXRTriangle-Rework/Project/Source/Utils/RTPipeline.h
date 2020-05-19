@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-
 #include "Structs/DxilLibrary.h"
 
 namespace DirectXUtil
@@ -20,12 +19,12 @@ namespace DirectXUtil
 		static const WCHAR* kMissShader;
 		static const WCHAR* kTriangleChs;
 		static const WCHAR* kPlaneChs;
-		static const WCHAR* kTriHitGroup ;
+		static const WCHAR* kTriHitGroup;
 		static const WCHAR* kPlaneHitGroup;
 		static const WCHAR* kShadowChs;
 		static const WCHAR* kShadowMiss;
 		static const WCHAR* kShadowHitGroup;
-		
+
 		static DirectXUtil::Structs::DxilLibrary createDxilLibrary();
 		static SampleFramework::IDxcBlobPtr compileLibrary(const WCHAR* filename, const WCHAR* targetString);
 

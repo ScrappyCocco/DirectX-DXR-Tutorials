@@ -66,8 +66,14 @@ SampleFramework::ID3D12ResourcePtr DirectXUtil::AccelerationStructures::createTr
 	};
 
 	// For simplicity, we create the vertex buffer on the upload heap, but that's not required
-	SampleFramework::ID3D12ResourcePtr pBuffer = createBuffer(pDevice, sizeof(vertices), D3D12_RESOURCE_FLAG_NONE,
-	                                                          D3D12_RESOURCE_STATE_GENERIC_READ, kUploadHeapProps);
+	SampleFramework::ID3D12ResourcePtr pBuffer = createBuffer(
+		pDevice,
+		sizeof(vertices),
+		D3D12_RESOURCE_FLAG_NONE,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		kUploadHeapProps
+	);
+
 	uint8_t* pData;
 	pBuffer->Map(0, nullptr, reinterpret_cast<void**>(&pData));
 	memcpy(pData, vertices, sizeof(vertices));
@@ -90,8 +96,14 @@ SampleFramework::ID3D12ResourcePtr DirectXUtil::AccelerationStructures::createPl
 	};
 
 	// For simplicity, we create the vertex buffer on the upload heap, but that's not required
-	SampleFramework::ID3D12ResourcePtr pBuffer = createBuffer(pDevice, sizeof(vertices), D3D12_RESOURCE_FLAG_NONE,
-	                                                          D3D12_RESOURCE_STATE_GENERIC_READ, kUploadHeapProps);
+	SampleFramework::ID3D12ResourcePtr pBuffer = createBuffer(
+		pDevice,
+		sizeof(vertices),
+		D3D12_RESOURCE_FLAG_NONE,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		kUploadHeapProps
+	);
+
 	uint8_t* pData;
 	pBuffer->Map(0, nullptr, reinterpret_cast<void**>(&pData));
 	memcpy(pData, vertices, sizeof(vertices));
@@ -129,10 +141,21 @@ DirectXUtil::Structs::AccelerationStructureBuffers DirectXUtil::AccelerationStru
 
 	// Create the buffers. They need to support UAV, and since we are going to immediately use them, we create them with an unordered-access state
 	DirectXUtil::Structs::AccelerationStructureBuffers buffers;
-	buffers.pScratch = createBuffer(pDevice, info.ScratchDataSizeInBytes, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS,
-	                                D3D12_RESOURCE_STATE_COMMON, kDefaultHeapProps);
-	buffers.pResult = createBuffer(pDevice, info.ResultDataMaxSizeInBytes, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS,
-	                               D3D12_RESOURCE_STATE_RAYTRACING_ACCELERATION_STRUCTURE, kDefaultHeapProps);
+	buffers.pScratch = createBuffer(
+		pDevice,
+		info.ScratchDataSizeInBytes,
+		D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS,
+		D3D12_RESOURCE_STATE_COMMON,
+		kDefaultHeapProps
+	);
+
+	buffers.pResult = createBuffer(
+		pDevice,
+		info.ResultDataMaxSizeInBytes,
+		D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS,
+		D3D12_RESOURCE_STATE_RAYTRACING_ACCELERATION_STRUCTURE,
+		kDefaultHeapProps
+	);
 
 	// Create the bottom-level AS
 	D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC asDesc = {};
@@ -178,15 +201,26 @@ void DirectXUtil::AccelerationStructures::buildTopLevelAS(SampleFramework::ID3D1
 	else
 	{
 		// If this is not an update operation then we need to create the buffers, otherwise we will refit in-place
-		buffers.pScratch = createBuffer(pDevice, info.ScratchDataSizeInBytes,
-		                                D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS,
-		                                D3D12_RESOURCE_STATE_UNORDERED_ACCESS, kDefaultHeapProps);
-		buffers.pResult = createBuffer(pDevice, info.ResultDataMaxSizeInBytes,
-		                               D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS,
-		                               D3D12_RESOURCE_STATE_RAYTRACING_ACCELERATION_STRUCTURE, kDefaultHeapProps);
-		buffers.pInstanceDesc = createBuffer(pDevice, sizeof(D3D12_RAYTRACING_INSTANCE_DESC) * 3,
-		                                     D3D12_RESOURCE_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ,
-		                                     kUploadHeapProps);
+		buffers.pScratch = createBuffer(
+			pDevice,
+			info.ScratchDataSizeInBytes,
+			D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS,
+			D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+			kDefaultHeapProps
+		);
+		buffers.pResult = createBuffer(
+			pDevice,
+			info.ResultDataMaxSizeInBytes,
+			D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS,
+			D3D12_RESOURCE_STATE_RAYTRACING_ACCELERATION_STRUCTURE,
+			kDefaultHeapProps);
+		buffers.pInstanceDesc = createBuffer(
+			pDevice,
+			sizeof(D3D12_RAYTRACING_INSTANCE_DESC) * 3,
+			D3D12_RESOURCE_FLAG_NONE,
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			kUploadHeapProps
+		);
 		tlasSize = info.ResultDataMaxSizeInBytes;
 	}
 

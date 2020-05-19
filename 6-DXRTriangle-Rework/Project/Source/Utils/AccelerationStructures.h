@@ -12,7 +12,7 @@ namespace DirectXUtil
 	public:
 		static const D3D12_HEAP_PROPERTIES kUploadHeapProps;
 		static const D3D12_HEAP_PROPERTIES kDefaultHeapProps;
-		
+
 		static SampleFramework::ID3D12ResourcePtr createBuffer(
 			SampleFramework::ID3D12Device5Ptr pDevice,
 			uint64_t size,
@@ -32,7 +32,7 @@ namespace DirectXUtil
 			const uint32_t vertexCount[],
 			uint32_t geometryCount
 		);
-		
+
 		static void buildTopLevelAS(
 			SampleFramework::ID3D12Device5Ptr pDevice,
 			SampleFramework::ID3D12GraphicsCommandList4Ptr pCmdList,

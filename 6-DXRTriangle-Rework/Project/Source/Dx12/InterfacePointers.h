@@ -1,6 +1,6 @@
 //=================================================================================================
 //
-//  MJP's DX12 Sample Framework
+//  MJP's DX12 Sample Framework WITH SOME ADDITIONS
 //  https://github.com/TheRealMJP/DXRPathTracer/blob/master/SampleFramework12/
 //
 //  All code licensed under the MIT license
@@ -65,7 +65,7 @@ namespace SampleFramework
 	typedef Microsoft::WRL::ComPtr<ID3D12Resource> ID3D12ResourcePtr;
 	typedef Microsoft::WRL::ComPtr<ID3D12RootSignature> ID3D12RootSignaturePtr;
 	typedef Microsoft::WRL::ComPtr<ID3D12RootSignatureDeserializer> ID3D12RootSignatureDeserializerPtr;
-	typedef Microsoft::WRL::ComPtr <ID3D12StateObjectProperties > ID3D12StateObjectPropertiesPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D12StateObjectProperties> ID3D12StateObjectPropertiesPtr;
 
 	typedef Microsoft::WRL::ComPtr<ID3D12Debug> ID3D12DebugPtr;
 	typedef Microsoft::WRL::ComPtr<ID3D12Debug1> ID3D12Debug1Ptr;

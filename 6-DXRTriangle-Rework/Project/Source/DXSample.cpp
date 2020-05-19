@@ -1,20 +1,6 @@
-//*********************************************************
-//
-// Copyright (c) Microsoft. All rights reserved.
-// This code is licensed under the MIT License (MIT).
-// THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-// ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-// IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-// PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-//
-//*********************************************************
-
 #include "stdafx.h"
 #include "DXSample.h"
-
 #include <codecvt>
-
-
 #include "Win32Application.h"
 
 using namespace Microsoft::WRL;
@@ -43,7 +29,7 @@ void DXSample::msgBox(const std::string& msg)
 void DXSample::d3dTraceHR(const std::string& msg, const HRESULT hr)
 {
 	char hr_msg[512];
-	FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, nullptr, hr, 0, hr_msg, ARRAYSIZE(hr_msg), nullptr);
+	FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, nullptr, hr, 0, hr_msg, NV_ARRAYSIZE(hr_msg), nullptr);
 
 	const std::string error_msg = msg + ".\nError! " + hr_msg;
 	msgBox(error_msg);
