@@ -44,9 +44,13 @@ If something doesn't work as expected fell free to [open an Issue](https://githu
 
 ## Tutorial list
 
-* [(0) Basic Dx12 Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/0-BasicDxTriangle): Is the basic rendering triangle made in Dx12, useful as starting point;
+* [(0) Microsoft - Basic Dx12 Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/0-BasicDxTriangle): Is the basic rendering triangle made in Dx12, useful as starting point (No Raytracing);
 * [(1) Nvidia - Raytraced Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/1-Dx12DXRTriangle): Raytracing version of the basic Dx12 triangle;
 * [(2) Nvidia - Perspective Camera](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/2-Dx12DXRTriangle-PerspectiveCamera): The Raytraced version of the triangle seen in Tutorial 1 with the addition of a Perspective Camera;
+* [(3) Nvidia - Per Instance Data](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/3-DXRTriangle-PerInstanceData): The Raytraced triangle, now with the addition of more geometry and so using "PerInstanceCommandBuffers" and "PerGeometryHitShader";
+* [(4) Nvidia - Another Ray Type](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/4-DXRTriangle-AnotherRayType): This tutorial add another ray to the scene, used for shadows;
+* [(5) Nvidia - Animated Scenes](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/5-DXRTriangle-AnimatedTriangle): This is the Raytracing triangles of Tutorial 4, with few changes to make the triangles rotate, to show what to change for a moving object;
+* [(6) Nvidia - Refitting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/6-DXRTriangle-Rework): This is the first tutorial **without** Nvidia helper classes. So you can see the creation and the usage of every resource.
 
 ## Resources
 
