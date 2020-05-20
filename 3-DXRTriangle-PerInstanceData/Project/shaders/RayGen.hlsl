@@ -15,7 +15,8 @@ cbuffer CameraParams : register(b0)
     float4x4 projectionI;
 }
 
-[shader("raygeneration")] void RayGen() {
+[shader("raygeneration")]
+void RayGen() {
     // Initialize the ray payload
     HitInfo payload;
     payload.colorAndDistance = float4(0, 0, 0, 0);

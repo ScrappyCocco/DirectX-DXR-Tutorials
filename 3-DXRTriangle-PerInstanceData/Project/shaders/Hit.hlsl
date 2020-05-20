@@ -15,7 +15,7 @@ cbuffer Colors : register(b0)
 
 StructuredBuffer<STriVertex> BTriVertex : register(t0);
 
-[shader("closesthit")] 
+[shader("closesthit")]
 void ClosestHit(inout HitInfo payload, Attributes attrib) {
     float3 barycentrics =
         float3(1.f - attrib.bary.x - attrib.bary.y, attrib.bary.x, attrib.bary.y);
