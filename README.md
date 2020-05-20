@@ -10,7 +10,7 @@ I made this also because, from a *noob* point of view, lots of tutorials are ful
 
 I will also document some parts of the code using Markdown, so that someone who is new in the topic is able to read and understand the basic concepts just giving a look from the Repository.
 
-The tutorials are in order of increasing difficulty and complexity, and each one require you to understand what has been done in the previous ones. Also because every tutorial starts with the code of the previous one, adding or changing some functions.
+The tutorials are in order of increasing difficulty and complexity, and each one require you to understand what has been done in the previous ones. Also because every tutorial starts with the code of the previous one, adding or changing some functions. More tutorials might be added in the future.
 
 ## Requirements
 
@@ -51,6 +51,7 @@ If something doesn't work as expected fell free to [open an Issue](https://githu
 * [(4) Nvidia - Another Ray Type](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/4-DXRTriangle-AnotherRayType): This tutorial add another ray to the scene, used for shadows;
 * [(5) Nvidia - Animated Scenes](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/5-DXRTriangle-AnimatedTriangle): This is the Raytracing triangles of Tutorial 4, with few changes to make the triangles rotate, to show what to change for a moving object;
 * [(6) Nvidia - Refitting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/6-DXRTriangle-Rework): This is the first tutorial **without** Nvidia helper classes. So you can see the creation and the usage of every resource.
+* [Future...?]
 
 ## Resources
 
