@@ -41,7 +41,7 @@ This document require that you understood the basic Raytracing flow made in Tuto
 The basics are exactly the same of the past 5 tutorials, this one is only larger because explicitly declare and allocate lots of resources that were in the helper classes.
 
 # Smart Pointers in this tutorial
-Nvidia in its code use a small different type of smart pointer, defines in Framework.h as:
+Nvidia in its code use a small different type of smart pointer, defined in Framework.h as:
 ```cpp
 #define MAKE_SMART_COM_PTR(_a) _COM_SMARTPTR_TYPEDEF(_a, __uuidof(_a))
 MAKE_SMART_COM_PTR(ID3D12Device5); //Example of usage
@@ -50,9 +50,9 @@ I decided to keep using Microsoft one:
 ```cpp
 Microsoft::WRL::ComPtr
 ```
-as it was in older tutorials, so all the code has been updated to use this pointers.
+as it was in older tutorials, so all the code has been updated to use this type of smart pointers.
 
-For simplicity, most of smart pointers used are in the file [InterfacePointers.h](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Dx12/InterfacePointers.h).
+For simplicity, most of these smart pointers used in the project are defined in the file [InterfacePointers.h](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Dx12/InterfacePointers.h).
 
 # GLM `#define`
 This tutorial use glm for matrices and other mathematical operations.
@@ -101,7 +101,7 @@ Note that the triangle rotation this time is not inside `OnUpdate()` but inside 
 
 The basics seen in tutorial 5 about updating the TopLevelAS remain the same.
 
-We created some buffers and recorded commands to create bottom-level and top-level acceleration structures. We now need to execute the command-list. To simplify resource lifetime management, we will submit the list and wait until the GPU finishes its execution. This is not required by the spec – the list can be submitted whenever as long as the resources are kept alive until execution finishes.
+After creating some buffers and recorded commands to create bottom-level and top-level acceleration structures, now we need to execute the command-list. To simplify resource lifetime management, we will submit the list and wait until the GPU finishes its execution. This is not required by the spec – the list can be submitted whenever as long as the resources are kept alive until execution finishes.
 
 The last part is releasing resources that are no longer required and keep references to the resources which will be used for rendering.
 
@@ -109,9 +109,11 @@ The last part is releasing resources that are no longer required and keep refere
 The RT Pipeline is managed inside [RTPipeline.cpp](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/RTPipeline.cpp).
 
 ## Shader libraries
-dxcompiler, the new SM6.x compiler, introduces a new concept called shader-libraries. Libraries allow us to compile a file containing multiple shaders without specifying an entry point. We create shader libraries by specifying "lib_6_3" as the target profile, which requires us to use an empty string for the entry point. Using dxcompiler is straightforward but is not in the scope of this tutorial. You can take a look at compileShader() to see an example usage.
+dxcompiler, the new SM6.x compiler, introduces a new concept called shader-libraries. Libraries allow us to compile a file containing multiple shaders without specifying an entry point. We create shader libraries by specifying "lib_6_3" as the target profile, which requires us to use an empty string for the entry point.
 
-You can see that here [RTPipeline.cpp#L29](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/RTPipeline.cpp#L29).
+Using dxcompiler is straightforward but is not in the scope of this tutorial.
+
+You can see how is used here [RTPipeline.cpp#L29](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/RTPipeline.cpp#L29).
 
 ## Shader code
 The [Shader code](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/shaders/Shaders.hlsl) is basically the same of tutorial 5, except this time is all inside a single file.
@@ -152,7 +154,7 @@ With all this structures, we can initialize all the necessary data and finally c
 
 # Shader Table
 ## Nvidia suggestion
-I strongly urge you to read the Shader-Table section in the spec. It covers many topics and details which are far beyond the scope of this tutorial. This tutorial will only cover the basic concepts. In the next tutorials we will see more advanced usages of the Shader-Table.
+I strongly urge you to read the Shader-Table section [in the spec](https://github.com/microsoft/DirectX-Specs/blob/master/d3d/Raytracing.md#shader-tables). It covers many topics and details which are far beyond the scope of this tutorial. This tutorial will only cover the basic concepts. In the next tutorials we will see more advanced usages of the Shader-Table.
 
 ## Basic description
 The last piece required for rendering is the Shader-Table. It’s a GPU-visible buffer which is owned and managed by the application – allocation, data updates, etc.

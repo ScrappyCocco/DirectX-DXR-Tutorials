@@ -4,7 +4,7 @@ Personal repository of tutorials and examples to understand the basics of Direct
 ## Description
 This is a personal repository to study and develop various tutorials about DirectX 12 Raytracing. Right now none of the tutorials is made by me, i just take and follow/study a tutorial and upload the result here, cleaning the code from unused functions, writing better includes and comments or stuff like that. I also make sure the project is still buildable and understandable as much as possible.
 
-I made this also because, from a *noob* point of view, lots of tutorials are full of unused variables, compilation errors, and stuff like that, and i wanted to provide clean resources anyone could consider to read/use.
+I made this also because, from a *noob* point of view, lots of tutorials are full of unused variables, compilation errors, and so on, and i wanted to provide clean resources anyone could consider to read/use.
 
 **The link to the official tutorial is always in the README of the project directory.**
 
@@ -20,7 +20,7 @@ You need to have some knowledge of Dx12 programming or another low-level graphic
 I started this study and repository having some basic knowledge of Vulkan i made developing my small own engine, so i found Dx12 to be quite similar even with its own differences.
 
 ### Externals
-From tutorial 6, also [glm](https://github.com/g-truc/glm) is necessary, so make sure that the folder `_externals/glm` is not empty. 
+From tutorial 6, also [glm](https://github.com/g-truc/glm) is necessary, so make sure that the folder `_externals/glm` is not empty.
 
 If is empty, initialize the submodule with:
 ```
@@ -31,7 +31,7 @@ git submodule update --init --recursive
 The tools you need are:
 
 * Windows 10 with the May 2019 Update (1903);
-* Visual Studio 2017 (VS 2019 works updating the building tools to v142 in the project);
+* Visual Studio 2017 (VS2019 should works updating the building tools to v142 in the project);
 * Windows 10 SDK >= May 2019 18362 (10.0.18362.0);
 * Dx12 GPU with a compatible DirectX Raytracing driver (Ex: Nvidia driver version 415 or higher).
 
@@ -47,10 +47,10 @@ If something doesn't work as expected fell free to [open an Issue](https://githu
 * [(0) Microsoft - Basic Dx12 Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/0-BasicDxTriangle): Is the basic rendering triangle made in Dx12, useful as starting point (No Raytracing);
 * [(1) Nvidia - Raytraced Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/1-Dx12DXRTriangle): Raytracing version of the basic Dx12 triangle;
 * [(2) Nvidia - Perspective Camera](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/2-Dx12DXRTriangle-PerspectiveCamera): The Raytraced version of the triangle seen in Tutorial 1 with the addition of a Perspective Camera;
-* [(3) Nvidia - Per Instance Data](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/3-DXRTriangle-PerInstanceData): The Raytraced triangle, now with the addition of more geometry and so using "PerInstanceCommandBuffers" and "PerGeometryHitShader";
+* [(3) Nvidia - Per Instance Data](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/3-DXRTriangle-PerInstanceData): The Raytraced triangle, now with the addition of more geometry, using "PerInstanceCommandBuffers" and "PerGeometryHitShader";
 * [(4) Nvidia - Another Ray Type](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/4-DXRTriangle-AnotherRayType): This tutorial add another ray to the scene, used for shadows;
 * [(5) Nvidia - Animated Scenes](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/5-DXRTriangle-AnimatedTriangle): This is the Raytracing triangles of Tutorial 4, with few changes to make the triangles rotate, to show what to change for a moving object;
-* [(6) Nvidia - Refitting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/6-DXRTriangle-Rework): This is the first tutorial **without** Nvidia helper classes. So you can see the creation and the usage of every resource.
+* [(6) Nvidia - Refitting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/6-DXRTriangle-Rework): This is the first tutorial **without** Nvidia helper classes. So you can see the creation and the usage of every resource;
 * [Future...?]
 
 ## Resources
