@@ -1,5 +1,5 @@
 # [Nvidia] DXR "HelloTriangle"  - Important Concepts
-This document is a summarize and a rework of the concepts of the Nvidia tutorial, in order to focus attention on some parts and functions in the code. Also because rewriting it helped me a lot to understand the basics. Note that this document will omit some details about a few variables types and calls that are not strictly necessary to understand the flow.
+This document is a summarize and a rework of the concepts of the Nvidia tutorial, in order to focus attention on some parts and functions in the code. Also because rewriting it helped me a lot to understand the basics. Note that this document will omit some details about a few variables types and calls that are not strictly necessary to understand the flow. Take the original tutorial as a reference.
 
 Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/author/mlefrancois/) and [Pascal Gautron](https://devblogs.nvidia.com/author/pgautron/) that made this tutorial, all this work is theirs, i just took it to change and summarize it a bit for educational purposes.
 
