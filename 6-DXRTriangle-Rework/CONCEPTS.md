@@ -3,7 +3,7 @@ This document is a summarize and a rework of the concepts of the Nvidia tutorial
 
 Thanks Nvidia and its [repository contributors](https://github.com/NVIDIAGameWorks/DxrTutorials/graphs/contributors) for this tutorial, all this work is theirs.
 
-Note that the whole tutorial documentation in the Nvidia repository is in .doc/.docx files, so you need to download them or clone the repository to open and read them.
+Note that the whole tutorial documentation in the Nvidia repository is in .doc/.docx files, so you need to download them or clone the repository in order to open and read them.
 
 ## Contents
 - [Introduction](#introduction)
