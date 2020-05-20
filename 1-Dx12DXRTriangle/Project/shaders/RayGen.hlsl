@@ -6,7 +6,8 @@ RWTexture2D<float4> gOutput : register(u0);
 // Raytracing acceleration structure, accessed as a SRV
 RaytracingAccelerationStructure SceneBVH : register(t0);
 
-[shader("raygeneration")] void RayGen() {
+[shader("raygeneration")] 
+void RayGen() {
     // Initialize the ray payload
     HitInfo payload;
     payload.colorAndDistance = float4(0, 0, 0, 0);
