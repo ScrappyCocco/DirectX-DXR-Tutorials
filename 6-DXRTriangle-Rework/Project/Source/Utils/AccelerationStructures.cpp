@@ -29,7 +29,7 @@ SampleFramework::ID3D12ResourcePtr DirectXUtil::AccelerationStructures::createBu
 	const D3D12_RESOURCE_STATES initState,
 	const D3D12_HEAP_PROPERTIES& heapProps)
 {
-	D3D12_RESOURCE_DESC bufDesc = {};
+	D3D12_RESOURCE_DESC bufDesc;
 	bufDesc.Alignment = 0;
 	bufDesc.DepthOrArraySize = 1;
 	bufDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -129,7 +129,7 @@ DirectXUtil::Structs::AccelerationStructureBuffers DirectXUtil::AccelerationStru
 	}
 
 	// Get the size requirements for the scratch and AS buffers
-	D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_INPUTS inputs = {};
+	D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_INPUTS inputs;
 	inputs.DescsLayout = D3D12_ELEMENTS_LAYOUT_ARRAY;
 	inputs.Flags = D3D12_RAYTRACING_ACCELERATION_STRUCTURE_BUILD_FLAG_NONE;
 	inputs.NumDescs = geometryCount;

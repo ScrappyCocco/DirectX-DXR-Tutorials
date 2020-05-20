@@ -77,7 +77,6 @@ SampleFramework::IDxcBlobPtr DirectXUtil::RTPipeline::compileLibrary(const WCHAR
 	ThrowIfFailed(pResult->GetStatus(&resultCode));
 
 	SampleFramework::IDxcBlobPtr pBlob;
-
 	ThrowIfFailed(pResult->GetResult(&pBlob));
 	return pBlob;
 }
@@ -87,6 +86,7 @@ DirectXUtil::RTPipeline::RootSignatureDesc DirectXUtil::RTPipeline::createRayGen
 	// Create the root-signature
 	RootSignatureDesc desc;
 	desc.range.resize(2);
+
 	// gOutput
 	desc.range[0].BaseShaderRegister = 0;
 	desc.range[0].NumDescriptors = 1;
@@ -118,6 +118,7 @@ DirectXUtil::RTPipeline::RootSignatureDesc DirectXUtil::RTPipeline::createTriang
 {
 	RootSignatureDesc desc;
 	desc.rootParams.resize(1);
+
 	desc.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	desc.rootParams[0].Descriptor.RegisterSpace = 0;
 	desc.rootParams[0].Descriptor.ShaderRegister = 0;
@@ -133,6 +134,7 @@ DirectXUtil::RTPipeline::RootSignatureDesc DirectXUtil::RTPipeline::createPlaneH
 {
 	RootSignatureDesc desc;
 	desc.range.resize(1);
+
 	desc.range[0].BaseShaderRegister = 0;
 	desc.range[0].NumDescriptors = 1;
 	desc.range[0].RegisterSpace = 0;

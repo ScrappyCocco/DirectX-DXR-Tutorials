@@ -76,7 +76,16 @@ void rayGen()
     ray.TMax = 100000;
 
     RayPayload payload;
-    TraceRay( gRtScene, 0 /*rayFlags*/, 0xFF, 0 /* ray index*/, 2, 0, ray, payload );
+    TraceRay(
+        gRtScene, 
+        0 /*rayFlags*/, 
+        0xFF, 
+        0 /* ray index*/, 
+        2, 
+        0, 
+        ray, 
+        payload 
+    );
     float3 col = linearToSrgb(payload.color);
     gOutput[launchIndex.xy] = float4(col, 1);
 }
@@ -111,7 +120,16 @@ void planeChs(inout RayPayload payload, in BuiltInTriangleIntersectionAttributes
     ray.TMin = 0.01;
     ray.TMax = 100000;
     ShadowPayload shadowPayload;
-    TraceRay(gRtScene, 0  /*rayFlags*/, 0xFF, 1 /* ray index*/, 0, 1, ray, shadowPayload);
+    TraceRay(
+        gRtScene, 
+        0  /*rayFlags*/, 
+        0xFF, 
+        1 /* ray index*/, 
+        0, 
+        1, 
+        ray, 
+        shadowPayload
+    );
 
     float factor = shadowPayload.hit ? 0.1 : 1.0;
     payload.color = float4(0.9f, 0.9f, 0.9f, 1.0f) * factor;

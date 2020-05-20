@@ -110,6 +110,7 @@ void D3D12HelloTriangle::OnInit()
 
 void D3D12HelloTriangle::OnUpdate()
 {
+	//Not used in this tutorial
 }
 
 void D3D12HelloTriangle::OnRender()
@@ -117,8 +118,15 @@ void D3D12HelloTriangle::OnRender()
 	const uint32_t rtvIndex = BeginFrame();
 
 	// Refit the top-level acceleration structure
-	DirectXUtil::AccelerationStructures::buildTopLevelAS(mpDevice, mpCmdList, mpBottomLevelAS, mTlasSize, mRotation,
-	                                                     true, mTopLevelBuffers);
+	DirectXUtil::AccelerationStructures::buildTopLevelAS(
+		mpDevice,
+		mpCmdList,
+		mpBottomLevelAS,
+		mTlasSize,
+		mRotation,
+		true,
+		mTopLevelBuffers
+	);
 	mRotation += 0.005f;
 
 	// Let's raytrace
@@ -255,15 +263,22 @@ void D3D12HelloTriangle::createAccelerationStructures()
 	mpBottomLevelAS[1] = bottomLevelBuffers[1].pResult;
 
 	// Create the TLAS
-	DirectXUtil::AccelerationStructures::buildTopLevelAS(mpDevice, mpCmdList, mpBottomLevelAS, mTlasSize, false, 0,
-	                                                     mTopLevelBuffers);
+	DirectXUtil::AccelerationStructures::buildTopLevelAS(
+		mpDevice,
+		mpCmdList,
+		mpBottomLevelAS,
+		mTlasSize,
+		false,
+		false,
+		mTopLevelBuffers
+	);
 
 	// The tutorial doesn't have any resource lifetime management, so we flush and sync here.
 	// This is not required by the DXR spec - you can submit the list whenever you like as long as you take care of the resources lifetime.
 	mFenceValue = DirectXUtil::D3D12GraphicsContext::submitCommandList(mpCmdList, mpCmdQueue, mpFence, mFenceValue);
 	mpFence->SetEventOnCompletion(mFenceValue, mFenceEvent);
 	WaitForSingleObject(mFenceEvent, INFINITE);
-	uint32_t bufferIndex = mpSwapChain->GetCurrentBackBufferIndex();
+
 	mpCmdList->Reset(mFrameObjects[0].pCmdAllocator.Get(), nullptr);
 }
 
@@ -441,9 +456,8 @@ void D3D12HelloTriangle::createShaderTable()
 	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
 	assert((reinterpret_cast<uint64_t>(pEntry3 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) % 8) == 0);
 	// Root descriptor must be stored at an 8-byte aligned address
-	*reinterpret_cast<D3D12_GPU_VIRTUAL_ADDRESS*>(pEntry3 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = mpConstantBuffer[0]
-		->
-		GetGPUVirtualAddress();
+	*reinterpret_cast<D3D12_GPU_VIRTUAL_ADDRESS*>(pEntry3 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) =
+		mpConstantBuffer[0]->GetGPUVirtualAddress();
 
 	// Entry 4 - Triangle 0, shadow ray. ProgramID only
 	uint8_t* pEntry4 = pData + mShaderTableEntrySize * 4;
@@ -454,8 +468,8 @@ void D3D12HelloTriangle::createShaderTable()
 	uint8_t* pEntry5 = pData + mShaderTableEntrySize * 5;
 	memcpy(pEntry5, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kPlaneHitGroup),
 	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
-	*reinterpret_cast<uint64_t*>(pEntry5 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = heapStart + mpDevice->
-		GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	*reinterpret_cast<uint64_t*>(pEntry5 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = heapStart +
+		mpDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	// The SRV comes directly after the program id
 
 	// Entry 6 - Plane, shadow ray
@@ -469,9 +483,8 @@ void D3D12HelloTriangle::createShaderTable()
 	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
 	assert((reinterpret_cast<uint64_t>(pEntry7 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) % 8) == 0);
 	// Root descriptor must be stored at an 8-byte aligned address
-	*reinterpret_cast<D3D12_GPU_VIRTUAL_ADDRESS*>(pEntry7 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = mpConstantBuffer[1]
-		->
-		GetGPUVirtualAddress();
+	*reinterpret_cast<D3D12_GPU_VIRTUAL_ADDRESS*>(pEntry7 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) =
+		mpConstantBuffer[1]->GetGPUVirtualAddress();
 
 	// Entry 8 - Triangle 1, shadow ray. ProgramID only
 	uint8_t* pEntry8 = pData + mShaderTableEntrySize * 8;
@@ -484,9 +497,8 @@ void D3D12HelloTriangle::createShaderTable()
 	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
 	assert((reinterpret_cast<uint64_t>(pEntry9 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) % 8) == 0);
 	// Root descriptor must be stored at an 8-byte aligned address
-	*reinterpret_cast<D3D12_GPU_VIRTUAL_ADDRESS*>(pEntry9 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = mpConstantBuffer[2]
-		->
-		GetGPUVirtualAddress();
+	*reinterpret_cast<D3D12_GPU_VIRTUAL_ADDRESS*>(pEntry9 + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) =
+		mpConstantBuffer[2]->GetGPUVirtualAddress();
 
 	// Entry 10 - Triangle 2, shadow ray. ProgramID only
 	uint8_t* pEntry10 = pData + mShaderTableEntrySize * 10;

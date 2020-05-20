@@ -5,5 +5,7 @@ This is the Raytracing triangles of Tutorial 5, made from Nvidia DXR Tutorials, 
 
 This is a tutorial made by Nvidia, that you can find here: [Dxr Tutorials](https://github.com/NVIDIAGameWorks/DxrTutorials).
 
+The project structure is copied from [Jorgemagic/CSharpDirectXRaytracing](https://github.com/Jorgemagic/CSharpDirectXRaytracing) because i found it quite clean and easy to read.
+
 ## Points of interest
 See the [Important Concepts](CONCEPTS.md) document, that you can find in this folder.
