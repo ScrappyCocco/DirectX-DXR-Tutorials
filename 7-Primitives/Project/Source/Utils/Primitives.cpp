@@ -4,11 +4,8 @@
 //Defined in the project
 #include <cmath>
 
-
 #include "../../../../_externals/glm/glm/fwd.hpp"
 #include "../../../../_externals/glm/glm/geometric.hpp"
-#include "../../../../_externals/glm/glm/gtx/euler_angles.hpp"
-#include "../../../../_externals/glm/glm/gtx/transform.hpp"
 #include "Source/DXSample.h"
 
 DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diameter, int tessellation,
@@ -33,7 +30,6 @@ DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diame
 	{
 		u += uIncrement;
 
-		// this.AddVertex(new Vector3(0,-1,0) * radius, new Vector3(0,-1,0), new Vector2(u, v));
 		Structs::VertexPositionNormalTangentTexture vertex(
 			glm::vec3(0, -1, 0) * radius,
 			glm::vec3(0, -1, 0),
@@ -87,7 +83,6 @@ DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diame
 	{
 		u += uIncrement;
 
-		// this.AddVertex(new Vector3(0,1,0) * radius, new Vector3(0,1,0), new Vector2(u, v));
 		Structs::VertexPositionNormalTangentTexture vertex(
 			glm::vec3(0, 1, 0) * radius,
 			glm::vec3(0, 1, 0),
@@ -102,13 +97,10 @@ DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diame
 	// Create a fan connecting the bottom vertex to the bottom latitude ring.
 	for (int i = 0; i < horizontalSegments; i++)
 	{
-		// this.AddIndex(i);
 		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(i));
 
-		// this.AddIndex(1 + i + horizontalSegments);
 		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(1 + i + horizontalSegments));
 
-		// this.AddIndex(i + horizontalSegments);
 		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(i + horizontalSegments));
 	}
 
@@ -126,22 +118,16 @@ DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diame
 			const int i3 = horizontalSegments + (nextI * num) + j;
 			const int i4 = i3 + 1;
 
-			// this.AddIndex(i1);
 			returnSphereInfo.indexData.push_back(static_cast<unsigned short>(i1));
 
-			// this.AddIndex(i2);
 			returnSphereInfo.indexData.push_back(static_cast<unsigned short>(i2));
 
-			// this.AddIndex(i3);
 			returnSphereInfo.indexData.push_back(static_cast<unsigned short>(i3));
 
-			// this.AddIndex(i2);
 			returnSphereInfo.indexData.push_back(static_cast<unsigned short>(i2));
 
-			// this.AddIndex(i4);
 			returnSphereInfo.indexData.push_back(static_cast<unsigned short>(i4));
 
-			// this.AddIndex(i3);
 			returnSphereInfo.indexData.push_back(static_cast<unsigned short>(i3));
 		}
 	}
@@ -149,14 +135,11 @@ DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diame
 	// Create a fan connecting the top vertex to the top latitude ring.
 	for (int i = 0; i < horizontalSegments; i++)
 	{
-		// this.AddIndex(this.VerticesCount - 1 - i);
 		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(returnSphereInfo.vertexData.size() - 1 - i));
 
-		// this.AddIndex(this.VerticesCount - horizontalSegments - 2 - i);
 		returnSphereInfo.indexData.push_back(
 			static_cast<unsigned short>(returnSphereInfo.vertexData.size() - horizontalSegments - 2 - i));
 
-		// this.AddIndex(this.VerticesCount - horizontalSegments - 1 - i);
 		returnSphereInfo.indexData.push_back(
 			static_cast<unsigned short>(returnSphereInfo.vertexData.size() - horizontalSegments - 1 - i));
 	}
