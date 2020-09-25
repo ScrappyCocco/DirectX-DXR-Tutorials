@@ -117,7 +117,7 @@ void D3D12Primitives::OnRender()
 
 	// Let's raytrace
 	DirectXUtil::D3D12GraphicsContext::resourceBarrier(
-		mpCmdList, 
+		mpCmdList,
 		mpOutputResource,
 		D3D12_RESOURCE_STATE_COPY_SOURCE,
 		D3D12_RESOURCE_STATE_UNORDERED_ACCESS
@@ -200,17 +200,13 @@ void D3D12Primitives::EndFrame(const uint32_t rtvIndex)
 	// Prepare the command list for the next frame
 	const uint32_t bufferIndex = mpSwapChain->GetCurrentBackBufferIndex();
 
-	
 	// Make sure we have the new back-buffer is ready
 	const uint32_t kDefaultSwapChainBuffers = DirectXUtil::D3D12GraphicsContext::getDefaultSwapChainBuffers();
-	if(mFenceValue > kDefaultSwapChainBuffers)
+	if (mFenceValue > kDefaultSwapChainBuffers)
 	{
 		mpFence->SetEventOnCompletion(mFenceValue - kDefaultSwapChainBuffers + 1, mFenceEvent);
 		WaitForSingleObject(mFenceEvent, INFINITE);
 	}
-	// Sync. We need to do this because the TLAS resources are not double-buffered and we are going to update them
-	//mpFence->SetEventOnCompletion(mFenceValue, mFenceEvent);
-	//WaitForSingleObject(mFenceEvent, INFINITE);
 
 	mFrameObjects[bufferIndex].pCmdAllocator->Reset();
 	mpCmdList->Reset(mFrameObjects[bufferIndex].pCmdAllocator.Get(), nullptr);
@@ -262,7 +258,7 @@ void D3D12Primitives::createAccelerationStructures()
 	// The tutorial doesn't have any resource lifetime management, so we flush and sync here.
 	// This is not required by the DXR spec - you can submit the list whenever you like as long as you take care of the resources lifetime.
 	mFenceValue = DirectXUtil::D3D12GraphicsContext::submitCommandList(mpCmdList, mpCmdQueue, mpFence, mFenceValue);
-	
+
 	mpFence->SetEventOnCompletion(mFenceValue, mFenceEvent);
 	WaitForSingleObject(mFenceEvent, INFINITE);
 
@@ -311,7 +307,7 @@ void D3D12Primitives::createRtPipelineState()
 		DirectXUtil::RTPipeline::kMissShader, DirectXUtil::RTPipeline::kClosestHitShader
 	};
 	DirectXUtil::Structs::ExportAssociation missHitRootAssociation(missHitExportName, NV_ARRAYSIZE(missHitExportName),
-	                                                             &(subobjects[hitMissRootIndex]));
+	                                                               &(subobjects[hitMissRootIndex]));
 	subobjects[index++] = missHitRootAssociation.subobject; // 5 Associate Root Sig to Miss and CHS
 
 	// Bind the payload size to all programs
@@ -369,7 +365,7 @@ void D3D12Primitives::createShaderTable()
 
 	// For simplicity, we create the shader-table on the upload heap. You can also create it on the default heap
 	mpShaderTable = DirectXUtil::AccelerationStructures::createBuffer(
-		mpDevice, 
+		mpDevice,
 		shaderTableSize,
 		D3D12_RESOURCE_FLAG_NONE,
 		D3D12_RESOURCE_STATE_GENERIC_READ,

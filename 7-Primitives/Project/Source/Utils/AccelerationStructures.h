@@ -22,7 +22,7 @@ namespace DirectXUtil
 			SampleFramework::ID3D12ResourcePtr indexBuffer;
 			unsigned int indexCount;
 		};
-		
+
 		static SampleFramework::ID3D12ResourcePtr createBuffer(
 			SampleFramework::ID3D12Device5Ptr pDevice,
 			uint64_t size,

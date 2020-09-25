@@ -17,10 +17,12 @@ namespace DirectXUtil
 			std::vector<Structs::VertexPositionNormalTangentTexture> vertexData;
 			std::vector<unsigned short> indexData;
 		};
+
 		/**
 		 * Sphere Primitive Generation
 		 */
-		static Shape createSphere(float diameter, int tessellation, bool uvHorizontalFlip = false, bool uvVerticalFlip = false);
+		static Shape createSphere(float diameter, int tessellation, bool uvHorizontalFlip = false,
+		                          bool uvVerticalFlip = false);
 	private:
 		static void calculateTangentSpace(Shape& shape);
 	};

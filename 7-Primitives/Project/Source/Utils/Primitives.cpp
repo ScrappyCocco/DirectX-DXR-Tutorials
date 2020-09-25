@@ -149,10 +149,12 @@ DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diame
 		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(returnSphereInfo.vertexData.size() - 1 - i));
 
 		// this.AddIndex(this.VerticesCount - horizontalSegments - 2 - i);
-		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(returnSphereInfo.vertexData.size() - horizontalSegments - 2 - i));
+		returnSphereInfo.indexData.push_back(
+			static_cast<unsigned short>(returnSphereInfo.vertexData.size() - horizontalSegments - 2 - i));
 
 		// this.AddIndex(this.VerticesCount - horizontalSegments - 1 - i);
-		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(returnSphereInfo.vertexData.size() - horizontalSegments - 1 - i));
+		returnSphereInfo.indexData.push_back(
+			static_cast<unsigned short>(returnSphereInfo.vertexData.size() - horizontalSegments - 1 - i));
 	}
 
 	calculateTangentSpace(returnSphereInfo);
@@ -215,7 +217,7 @@ void DirectXUtil::Primitives::calculateTangentSpace(Shape& shape)
 		tan2[i3] += tdir;
 	}
 
-	for(int a = 0; a < vertexCount; a++)
+	for (int a = 0; a < vertexCount; a++)
 	{
 		Structs::VertexPositionNormalTangentTexture vertex = shape.vertexData[a];
 

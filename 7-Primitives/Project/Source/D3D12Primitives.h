@@ -36,7 +36,7 @@ private:
 	HANDLE mFenceEvent;
 	uint64_t mFenceValue = 0;
 
-	std::vector <DirectXUtil::Structs::FrameObject> mFrameObjects;
+	std::vector<DirectXUtil::Structs::FrameObject> mFrameObjects;
 
 	DirectXUtil::Structs::HeapData mRtvHeap;
 	static const uint32_t kRtvHeapSize = 3;
