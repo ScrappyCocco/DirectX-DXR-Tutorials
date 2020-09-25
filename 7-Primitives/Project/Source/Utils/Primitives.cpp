@@ -4,7 +4,12 @@
 //Defined in the project
 #include <cmath>
 
+
+#include "../../../../_externals/glm/glm/fwd.hpp"
 #include "../../../../_externals/glm/glm/geometric.hpp"
+#include "../../../../_externals/glm/glm/gtx/euler_angles.hpp"
+#include "../../../../_externals/glm/glm/gtx/transform.hpp"
+#include "Source/DXSample.h"
 
 DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diameter, int tessellation,
                                                                      bool uvHorizontalFlip, bool uvVerticalFlip)
@@ -63,7 +68,6 @@ DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diame
 			const glm::vec2 texCoord(u, v);
 			u += uIncrement;
 
-			// this.AddVertex(normal * radius, normal, texCoord);
 			Structs::VertexPositionNormalTangentTexture vertex(
 				normal * radius,
 				normal,
@@ -155,6 +159,114 @@ DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diame
 		// this.AddIndex(this.VerticesCount - horizontalSegments - 1 - i);
 		returnSphereInfo.indexData.push_back(
 			static_cast<unsigned short>(returnSphereInfo.vertexData.size() - horizontalSegments - 1 - i));
+	}
+
+	calculateTangentSpace(returnSphereInfo);
+
+	return returnSphereInfo;
+}
+
+DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createCube(float size, bool uvHorizontalFlip,
+                                                                   bool uvVerticalFlip, float uTileFactor,
+                                                                   float vTileFactor)
+{
+	Shape returnSphereInfo;
+
+	const float uCoordMin = uvHorizontalFlip ? uTileFactor : 0;
+	const float uCoordMax = uvHorizontalFlip ? 0 : uTileFactor;
+	const float vCoordMin = uvVerticalFlip ? vTileFactor : 0;
+	const float vCoordMax = uvVerticalFlip ? 0 : vTileFactor;
+
+	const glm::vec3 normals[] = {
+		glm::vec3(0, 0, 1),
+		glm::vec3(0, 0, -1),
+		glm::vec3(1, 0, 0),
+		glm::vec3(-1, 0, 0),
+		glm::vec3(0, 1, 0),
+		glm::vec3(0, -1, 0),
+	};
+
+	const glm::vec2 texCoord[] = {
+		glm::vec2(uCoordMax, vCoordMax), glm::vec2(uCoordMin, vCoordMax), glm::vec2(uCoordMin, vCoordMin),
+		glm::vec2(uCoordMax, vCoordMin),
+		glm::vec2(uCoordMin, vCoordMin), glm::vec2(uCoordMax, vCoordMin), glm::vec2(uCoordMax, vCoordMax),
+		glm::vec2(uCoordMin, vCoordMax),
+		glm::vec2(uCoordMax, vCoordMin), glm::vec2(uCoordMax, vCoordMax), glm::vec2(uCoordMin, vCoordMax),
+		glm::vec2(uCoordMin, vCoordMin),
+		glm::vec2(uCoordMax, vCoordMin), glm::vec2(uCoordMax, vCoordMax), glm::vec2(uCoordMin, vCoordMax),
+		glm::vec2(uCoordMin, vCoordMin),
+		glm::vec2(uCoordMin, vCoordMax), glm::vec2(uCoordMin, vCoordMin), glm::vec2(uCoordMax, vCoordMin),
+		glm::vec2(uCoordMax, vCoordMax),
+		glm::vec2(uCoordMax, vCoordMin), glm::vec2(uCoordMax, vCoordMax), glm::vec2(uCoordMin, vCoordMax),
+		glm::vec2(uCoordMin, vCoordMin),
+	};
+
+	const glm::vec3 tangents[] = {
+		glm::vec3(1, 0, 0),
+		glm::vec3(-1, 0, 0),
+		glm::vec3(0, 0, -1),
+		glm::vec3(0, 0, 1),
+		glm::vec3(1, 0, 0),
+		glm::vec3(1, 0, 0),
+	};
+
+	// Create each face in turn.
+	for (int i = 0, j = 0; i < NV_ARRAYSIZE(normals); i++, j += 4)
+	{
+		glm::vec3 normal = normals[i];
+		glm::vec3 tangent = tangents[i];
+
+		// Get two vectors perpendicular to the face normal and to each other.
+		glm::vec3 side1 = glm::vec3(normal.y, normal.z, normal.x);
+		glm::vec3 side2 = glm::cross(normal, side1);
+
+		const int vertexCount = returnSphereInfo.vertexData.size();
+
+		// Six indices (two triangles) per face.
+		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(vertexCount + 0));
+
+		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(vertexCount + 1));
+
+		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(vertexCount + 3));
+
+		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(vertexCount + 1));
+
+		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(vertexCount + 2));
+
+		returnSphereInfo.indexData.push_back(static_cast<unsigned short>(vertexCount + 3));
+
+		// 0   3
+		// 1   2
+		const float sideOverTwo = size * 0.5f;
+
+		// Four vertices per face.
+		returnSphereInfo.vertexData.emplace_back(
+			(normal - side1 - side2) * sideOverTwo,
+			normal,
+			tangent,
+			texCoord[j]
+		);
+
+		returnSphereInfo.vertexData.emplace_back(
+			(normal - side1 + side2) * sideOverTwo,
+			normal,
+			tangent,
+			texCoord[j + 1]
+		);
+
+		returnSphereInfo.vertexData.emplace_back(
+			(normal + side1 + side2) * sideOverTwo,
+			normal,
+			tangent,
+			texCoord[j + 2]
+		);
+
+		returnSphereInfo.vertexData.emplace_back(
+			(normal + side1 - side2) * sideOverTwo,
+			normal,
+			tangent,
+			texCoord[j + 3]
+		);
 	}
 
 	calculateTangentSpace(returnSphereInfo);

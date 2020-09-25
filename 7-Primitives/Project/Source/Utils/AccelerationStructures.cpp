@@ -60,6 +60,7 @@ DirectXUtil::AccelerationStructures::ShapeResources* DirectXUtil::AccelerationSt
 	SampleFramework::ID3D12Device5Ptr pDevice)
 {
 	DirectXUtil::Primitives::Shape shape = DirectXUtil::Primitives::createSphere(2.0f, 32);
+	//DirectXUtil::Primitives::Shape shape = DirectXUtil::Primitives::createCube(1.5f);
 
 	ShapeResources* resources = new ShapeResources;
 
