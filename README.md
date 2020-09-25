@@ -2,15 +2,29 @@
 Personal repository of tutorials and examples to understand the basics of DirectX 12 instructions and DirectX 12 Raytracing (DXR).
 
 ## Description
-This is a personal repository to study and develop various tutorials about DirectX 12 Raytracing. Right now none of the tutorials is made by me, i just take and follow/study a tutorial and upload the result here, cleaning the code from unused functions, writing better includes and comments or stuff like that. I also make sure the project is still buildable and understandable as much as possible.
+This is a personal repository to study and develop various tutorials about DirectX 12 Raytracing. Right now none of the tutorials is made by me, I just take and follow/study a tutorial or an example and upload the result here, cleaning the code from unused functions, writing better includes and comments or stuff like that. I also make sure the project is still buildable and understandable as much as possible.
 
-I made this also because, from a *noob* point of view, lots of tutorials are full of unused variables, compilation errors, and so on, and i wanted to provide clean resources anyone could consider to read/use.
+I made this also because, from a beginner point of view, lots of tutorials are full of unused variables, compilation errors, and so on, and I wanted to provide clean resources anyone could consider to read/use.
 
-**The link to the official tutorial is always in the README of the project directory.**
+**The link to the original tutorial/example is always in the README of the project directory.**
 
 I will also document some parts of the code using Markdown, so that someone who is new in the topic is able to read and understand the basic concepts just giving a look from the Repository.
 
-The tutorials are in order of increasing difficulty and complexity, and each one require you to understand what has been done in the previous ones. Also because every tutorial starts with the code of the previous one, adding or changing some functions. More tutorials might be added in the future.
+The tutorials are in order of increasing difficulty and complexity, and each one require you to understand what has been done in the previous ones. Also because every tutorial starts with the code of the previous one, adding or changing some functions.
+
+More tutorials might be added in the future.
+
+## Tutorial list
+
+* [(0) Microsoft - Basic Dx12 Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/0-BasicDxTriangle): Is the basic rendering triangle made in Dx12, useful as starting point (No Raytracing);
+* [(1) Nvidia - Raytraced Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/1-Dx12DXRTriangle): Raytracing version of the basic Dx12 triangle;
+* [(2) Nvidia - Perspective Camera](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/2-Dx12DXRTriangle-PerspectiveCamera): The Raytraced version of the triangle seen in Tutorial 1 with the addition of a Perspective Camera;
+* [(3) Nvidia - Per Instance Data](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/3-DXRTriangle-PerInstanceData): The Raytraced triangle, now with the addition of more geometry, using "PerInstanceCommandBuffers" and "PerGeometryHitShader";
+* [(4) Nvidia - Another Ray Type](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/4-DXRTriangle-AnotherRayType): This tutorial add another ray to the scene, used for shadows;
+* [(5) Nvidia - Animated Scenes](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/5-DXRTriangle-AnimatedTriangle): This is the Raytracing triangles of Tutorial 4, with few changes to make the triangles rotate, to show what to change for a moving object;
+* [(6) Nvidia - Refitting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/6-DXRTriangle-Rework): This is the first tutorial **without** Nvidia helper classes. So you can see the creation and the usage of every resource;
+* [(7) Primitives](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/7-Primitives): This tutorial shows how to create a Raytracing Acceleration Structure from vertex and index geometry buffers, rendering a Sphere or a Cube.
+* [Future...?]
 
 ## Requirements
 
@@ -40,18 +54,7 @@ Every folder has its own Visual Studio Solution (.sln) that's ready to build and
 
 Note that you may need to retarget the Build Tools or the Windows 10 SDK in case of a different version installed on your machine.
 
-If something doesn't work as expected fell free to [open an Issue](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/issues).
-
-## Tutorial list
-
-* [(0) Microsoft - Basic Dx12 Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/0-BasicDxTriangle): Is the basic rendering triangle made in Dx12, useful as starting point (No Raytracing);
-* [(1) Nvidia - Raytraced Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/1-Dx12DXRTriangle): Raytracing version of the basic Dx12 triangle;
-* [(2) Nvidia - Perspective Camera](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/2-Dx12DXRTriangle-PerspectiveCamera): The Raytraced version of the triangle seen in Tutorial 1 with the addition of a Perspective Camera;
-* [(3) Nvidia - Per Instance Data](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/3-DXRTriangle-PerInstanceData): The Raytraced triangle, now with the addition of more geometry, using "PerInstanceCommandBuffers" and "PerGeometryHitShader";
-* [(4) Nvidia - Another Ray Type](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/4-DXRTriangle-AnotherRayType): This tutorial add another ray to the scene, used for shadows;
-* [(5) Nvidia - Animated Scenes](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/5-DXRTriangle-AnimatedTriangle): This is the Raytracing triangles of Tutorial 4, with few changes to make the triangles rotate, to show what to change for a moving object;
-* [(6) Nvidia - Refitting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/6-DXRTriangle-Rework): This is the first tutorial **without** Nvidia helper classes. So you can see the creation and the usage of every resource;
-* [Future...?]
+If something doesn't work as expected, or you wish to change anything, feel free to [open an Issue](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/issues) so we can discuss about it.
 
 ## Resources
 
