@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <stdexcept>
+
 inline void ThrowIfFailed(const HRESULT hr, const std::string& error = "Generic Error")
 {
 	if (FAILED(hr))
