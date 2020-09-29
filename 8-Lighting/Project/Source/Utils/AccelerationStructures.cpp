@@ -114,7 +114,7 @@ DirectXUtil::Structs::AccelerationStructureBuffers DirectXUtil::AccelerationStru
 
 	//Create the primitive
 	createPrimitive(pDevice);
-	
+
 	if (!createdPrimitive)
 	{
 		ThrowError("createdPrimitive is invalid");

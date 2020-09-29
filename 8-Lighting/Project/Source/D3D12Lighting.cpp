@@ -234,7 +234,7 @@ SampleFramework::ID3D12RootSignaturePtr D3D12Lighting::createRootSignature(
 			IID_PPV_ARGS(&pRootSig)
 		)
 	);
-	auto result = pDevice->GetDeviceRemovedReason();
+
 	return pRootSig;
 }
 
@@ -299,11 +299,13 @@ void D3D12Lighting::createRtPipelineState()
 	subobjects[index++] = rgsRootAssociation.subobject; // 3 Associate Root Sig to RGS
 
 	// Create the hit root-signature and association
-	DirectXUtil::Structs::LocalRootSignature hitRootSignature(mpDevice, DirectXUtil::RTPipeline::CreateHitRootDesc().desc);
+	DirectXUtil::Structs::LocalRootSignature hitRootSignature(
+		mpDevice, DirectXUtil::RTPipeline::CreateHitRootDesc().desc);
 	subobjects[index] = hitRootSignature.subobject; // 4 Hit Root Sig
 
 	const uint32_t hitRootIndex = index++; // 4
-	DirectXUtil::Structs::ExportAssociation hitRootAssociation(&DirectXUtil::RTPipeline::kClosestHitShader, 1, &(subobjects[hitRootIndex]));
+	DirectXUtil::Structs::ExportAssociation hitRootAssociation(&DirectXUtil::RTPipeline::kClosestHitShader, 1,
+	                                                           &(subobjects[hitRootIndex]));
 	subobjects[index++] = hitRootAssociation.subobject; // 6 Associate Hit Root Sig to Hit Group
 
 	// Create the miss root-signature and association
@@ -313,19 +315,21 @@ void D3D12Lighting::createRtPipelineState()
 	subobjects[index] = missRootSignature.subobject; // 6 Miss Root Sig
 
 	const uint32_t missRootIndex = index++; // 6
-	DirectXUtil::Structs::ExportAssociation missRootAssociation(&DirectXUtil::RTPipeline::kMissShader, 1, &(subobjects[missRootIndex]));
+	DirectXUtil::Structs::ExportAssociation missRootAssociation(&DirectXUtil::RTPipeline::kMissShader, 1,
+	                                                            &(subobjects[missRootIndex]));
 	subobjects[index++] = missRootAssociation.subobject; // 7 Associate Miss Root Sig to Miss Shader
 
 	// Bind the payload size to all programs
 	DirectXUtil::Structs::ShaderConfig shaderConfig(sizeof(float) * 2, sizeof(float) * 4);
 	subobjects[index] = shaderConfig.subobject; // 8 Shader Config;
-	
+
 	const uint32_t shaderConfigIndex = index++; // 8
 	const WCHAR* shaderExports[] = {
-		DirectXUtil::RTPipeline::kMissShader, DirectXUtil::RTPipeline::kClosestHitShader, DirectXUtil::RTPipeline::kRayGenShader
+		DirectXUtil::RTPipeline::kMissShader, DirectXUtil::RTPipeline::kClosestHitShader,
+		DirectXUtil::RTPipeline::kRayGenShader
 	};
 	DirectXUtil::Structs::ExportAssociation configAssociation(shaderExports, NV_ARRAYSIZE(shaderExports),
-	                                                               &(subobjects[shaderConfigIndex]));
+	                                                          &(subobjects[shaderConfigIndex]));
 	subobjects[index++] = configAssociation.subobject; // 9 Associate Shader Config to Miss, CHS, RGS
 
 	// Create the pipeline config
@@ -395,8 +399,8 @@ void D3D12Lighting::createShaderTable()
 	memcpy(pData, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kHitGroup),
 	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
 	const uint64_t heapStartHit = mpSrvUavHeap->GetGPUDescriptorHandleForHeapStart().ptr;
-	*reinterpret_cast<uint64_t*>(pData + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = heapStart;
-	
+	*reinterpret_cast<uint64_t*>(pData + D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES) = heapStartHit;
+
 	// Unmap
 	mpShaderTable->Unmap(0, nullptr);
 }
@@ -450,8 +454,9 @@ void D3D12Lighting::createShaderResources()
 	mpDevice->CreateShaderResourceView(nullptr, &srvDesc, srvHandle);
 
 	//Get the primitive buffers
-	const DirectXUtil::AccelerationStructures::ShapeResources* primitiveRes = DirectXUtil::AccelerationStructures::createdPrimitive;
-	
+	const DirectXUtil::AccelerationStructures::ShapeResources* primitiveRes =
+		DirectXUtil::AccelerationStructures::createdPrimitive;
+
 	// Index SRV
 	D3D12_SHADER_RESOURCE_VIEW_DESC indexSrvDesc = {};
 	indexSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
@@ -464,7 +469,7 @@ void D3D12Lighting::createShaderResources()
 	srvHandle.ptr += mpDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	indexSRVHandle = srvHandle;
 	mpDevice->CreateShaderResourceView(primitiveRes->indexBuffer.Get(), &indexSrvDesc, indexSRVHandle);
-	
+
 	// Vertex SRV
 	D3D12_SHADER_RESOURCE_VIEW_DESC vertexSRVDesc = {};
 	vertexSRVDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
