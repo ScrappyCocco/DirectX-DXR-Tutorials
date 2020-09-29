@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{67bebf86-9539-4f7f-b9e9-a376519ec1f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{954a8f61-1c3e-419b-baca-c5e2b83c689a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{09095d68-bcd7-45c4-b007-5c8ddb5d60a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dx12">
+      <UniqueIdentifier>{e2e9d1a3-7ca3-44af-ad98-d4003971f749}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DXCAPI">
+      <UniqueIdentifier>{14f3c696-4df5-4eec-9856-d784b6b035c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{003d0635-eb74-4694-a4e0-98e2b3ae0bed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils\Structs">
+      <UniqueIdentifier>{6f52897d-9c27-452a-a4ed-1ee003b87c4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{a48acc6a-e622-4b72-88ca-48b38a5821f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\shaders">
+      <UniqueIdentifier>{8b0cb0c9-e0d8-4107-91c8-11654fac88e7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\DXCAPI\dxcapi.use.h">
+      <Filter>Header Files\DXCAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Dx12\InterfacePointers.h">
+      <Filter>Header Files\Dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DXSample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DXSampleHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Win32Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\AccelerationStructureBuffers.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\DxilLibrary.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\ExportAssociation.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\FrameObject.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\GlobalRootSignature.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\HeapData.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\HitProgram.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\LocalRootSignature.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\PipelineConfig.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\ShaderConfig.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\AccelerationStructures.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\D3D12GraphicsContext.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\RTPipeline.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Structs\VertexPositionNormalTangentTexture.h">
+      <Filter>Header Files\Utils\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Primitives.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\D3D12Lighting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\Shaders.hlsl">
+      <Filter>Assets\shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\DXSample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Win32Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\AccelerationStructures.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\D3D12GraphicsContext.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\RTPipeline.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Primitives.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\D3D12Lighting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
