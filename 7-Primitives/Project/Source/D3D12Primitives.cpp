@@ -233,7 +233,7 @@ SampleFramework::ID3D12RootSignaturePtr D3D12Primitives::createRootSignature(
 			IID_PPV_ARGS(&pRootSig)
 		)
 	);
-	auto result = pDevice->GetDeviceRemovedReason();
+
 	return pRootSig;
 }
 
