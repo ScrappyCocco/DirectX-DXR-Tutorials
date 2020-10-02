@@ -60,6 +60,7 @@ namespace DirectXUtil
 			uint64_t& tlasSize,
 			DirectXUtil::Structs::AccelerationStructureBuffers& buffers
 		);
+
 	private:
 		static DirectXUtil::Structs::AccelerationStructureBuffers createBottomLevelAS(
 			SampleFramework::ID3D12Device5Ptr pDevice,

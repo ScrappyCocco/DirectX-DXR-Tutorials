@@ -63,7 +63,7 @@ SampleFramework::ID3D12ResourcePtr DirectXUtil::AccelerationStructures::createBu
 }
 
 DirectXUtil::AccelerationStructures::ShapeResources* DirectXUtil::AccelerationStructures::createPrimitive(
-	SampleFramework::ID3D12Device5Ptr pDevice, PrimitiveType type)
+	SampleFramework::ID3D12Device5Ptr pDevice, const PrimitiveType type)
 {
 	DirectXUtil::Primitives::Shape shape;
 

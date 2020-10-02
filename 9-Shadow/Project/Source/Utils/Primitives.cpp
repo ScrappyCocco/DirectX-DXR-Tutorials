@@ -8,8 +8,10 @@
 #include "../../../../_externals/glm/glm/geometric.hpp"
 #include "Source/DXSample.h"
 
-DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diameter, int tessellation,
-                                                                     bool uvHorizontalFlip, bool uvVerticalFlip)
+DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(const float diameter,
+                                                                     const int tessellation,
+                                                                     const bool uvHorizontalFlip,
+                                                                     const bool uvVerticalFlip)
 {
 	Shape returnSphereInfo;
 
@@ -149,9 +151,11 @@ DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createSphere(float diame
 	return returnSphereInfo;
 }
 
-DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createCube(float size, bool uvHorizontalFlip,
-                                                                   bool uvVerticalFlip, float uTileFactor,
-                                                                   float vTileFactor)
+DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createCube(const float size,
+                                                                   const bool uvHorizontalFlip,
+                                                                   const bool uvVerticalFlip,
+                                                                   const float uTileFactor,
+                                                                   const float vTileFactor)
 {
 	Shape returnSphereInfo;
 
@@ -257,8 +261,11 @@ DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createCube(float size, b
 	return returnSphereInfo;
 }
 
-DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createQuad(int size, bool uvHorizontalFlip, bool uvVerticalFlip,
-                                                                   float uTileFactor, float vTileFactor)
+DirectXUtil::Primitives::Shape DirectXUtil::Primitives::createQuad(const int size,
+                                                                   const bool uvHorizontalFlip,
+                                                                   const bool uvVerticalFlip,
+                                                                   const float uTileFactor,
+                                                                   const float vTileFactor)
 {
 	Shape returnSphereInfo;
 

@@ -326,7 +326,7 @@ void D3D12Shadow::createRtPipelineState()
 
 	// Bind the payload size to all programs
 	//MaxPayloadSize float4 + uint
-	DirectXUtil::Structs::ShaderConfig shaderConfig(sizeof(float) * 2, sizeof(float) * (4+1));
+	DirectXUtil::Structs::ShaderConfig shaderConfig(sizeof(float) * 2, sizeof(float) * (4 + 1));
 	subobjects[index] = shaderConfig.subobject; // 8 Shader Config;
 
 	const uint32_t shaderConfigIndex = index++; // 8
@@ -341,7 +341,7 @@ void D3D12Shadow::createRtPipelineState()
 	subobjects[index++] = configAssociation.subobject; // 9 Associate Shader Config to Miss, CHS, RGS
 
 	// Create the pipeline config
-	DirectXUtil::Structs::PipelineConfig config(4+1);
+	DirectXUtil::Structs::PipelineConfig config(4 + 1);
 	subobjects[index++] = config.subobject; // 10
 
 	// Create the global root signature and store the empty signature
@@ -405,7 +405,7 @@ void D3D12Shadow::createShaderTable()
 	// Entry 2 - miss program
 	pData += mShaderTableEntrySize; // +1 skips ray-gen
 	memcpy(pData, pRtsoProps->GetShaderIdentifier(DirectXUtil::RTPipeline::kShadowMiss),
-		D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
+	       D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES);
 
 	// Entry 3 - hit program
 	pData += mShaderTableEntrySize;
