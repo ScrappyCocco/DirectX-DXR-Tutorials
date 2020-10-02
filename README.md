@@ -1,3 +1,5 @@
+![Header of Dx12 examples repository](ReadmeMedia/header.png)
+
 # DirectX 12 DXR Tutorials
 Personal repository of tutorials and examples to understand the basics of DirectX 12 instructions and DirectX 12 Raytracing (DXR).
 
@@ -16,14 +18,17 @@ More tutorials might be added in the future.
 
 ## Tutorial list
 
-* [(0) Microsoft - Basic Dx12 Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/0-BasicDxTriangle): Is the basic rendering triangle made in Dx12, useful as starting point (No Raytracing);
-* [(1) Nvidia - Raytraced Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/1-Dx12DXRTriangle): Raytracing version of the basic Dx12 triangle;
-* [(2) Nvidia - Perspective Camera](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/2-Dx12DXRTriangle-PerspectiveCamera): The Raytraced version of the triangle seen in Tutorial 1 with the addition of a Perspective Camera;
-* [(3) Nvidia - Per Instance Data](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/3-DXRTriangle-PerInstanceData): The Raytraced triangle, now with the addition of more geometry, using "PerInstanceCommandBuffers" and "PerGeometryHitShader";
-* [(4) Nvidia - Another Ray Type](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/4-DXRTriangle-AnotherRayType): This tutorial add another ray to the scene, used for shadows;
-* [(5) Nvidia - Animated Scenes](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/5-DXRTriangle-AnimatedTriangle): This is the Raytracing triangles of Tutorial 4, with few changes to make the triangles rotate, to show what to change for a moving object;
-* [(6) Nvidia - Refitting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/6-DXRTriangle-Rework): This is the first tutorial **without** Nvidia helper classes. So you can see the creation and the usage of every resource;
-* [(7) Primitives](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/7-Primitives): This tutorial shows how to create a Raytracing Acceleration Structure from vertex and index geometry buffers, rendering a Sphere or a Cube.
+* [(0) Microsoft - Basic Dx12 Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/00-BasicDxTriangle): Is the basic rendering triangle made in Dx12, useful as starting point (No Raytracing);
+* [(1) Nvidia - Raytraced Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/01-Dx12DXRTriangle): Raytracing version of the basic Dx12 triangle;
+* [(2) Nvidia - Perspective Camera](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/02-Dx12DXRTriangle-PerspectiveCamera): The Raytraced version of the triangle seen in Tutorial 1 with the addition of a Perspective Camera;
+* [(3) Nvidia - Per Instance Data](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/03-DXRTriangle-PerInstanceData): The Raytraced triangle, now with the addition of more geometry, using "PerInstanceCommandBuffers" and "PerGeometryHitShader";
+* [(4) Nvidia - Another Ray Type](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/04-DXRTriangle-AnotherRayType): This tutorial add another ray to the scene, used for shadows;
+* [(5) Nvidia - Animated Scenes](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/05-DXRTriangle-AnimatedTriangle): This is the Raytracing triangles of Tutorial 4, with few changes to make the triangles rotate, to show what to change for a moving object;
+* [(6) Nvidia - Refitting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/06-DXRTriangle-Rework): This is the first tutorial **without** Nvidia helper classes. So you can see the creation and the usage of every resource;
+* [(7) Primitives](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/07-Primitives): This example shows how to create a Raytracing Acceleration Structure from vertex and index geometry buffers, rendering a Sphere or a Cube;
+* [(8) Lighting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/08-Lighting): This example shows how to lighting a mesh using Raytracing pipeline, passing vertexBuffer and indexBuffer information to the shader;
+* [(9) Shadow](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/09-Shadow): This example shows how to project shadows, adding a second geometry (ground) in the Acceleration Structure and throwing a second ray to know whether a hit point is in shadow;
+* [(10) Reflection](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/10-Reflection): This example shows how to make reflection meshes, adding a third reflected ray for each hit point recursively to calculate the final color (4 rebounds maximum deep).
 * [Future...?]
 
 ## Requirements
