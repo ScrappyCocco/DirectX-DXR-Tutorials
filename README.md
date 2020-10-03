@@ -18,7 +18,7 @@ More tutorials might be added in the future.
 
 ## Tutorial list
 
-* [(0) Microsoft - Basic Dx12 Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/00-BasicDxTriangle): Is the basic rendering triangle made in Dx12, useful as starting point (No Raytracing);
+* [(0) Microsoft - Basic Dx12 Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/00-BasicDxTriangle): Is the basic rendering triangle made in Dx12, useful as starting point (**No Raytracing**);
 * [(1) Nvidia - Raytraced Triangle](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/01-Dx12DXRTriangle): Raytracing version of the basic Dx12 triangle;
 * [(2) Nvidia - Perspective Camera](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/02-Dx12DXRTriangle-PerspectiveCamera): The Raytraced version of the triangle seen in Tutorial 1 with the addition of a Perspective Camera;
 * [(3) Nvidia - Per Instance Data](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/03-DXRTriangle-PerInstanceData): The Raytraced triangle, now with the addition of more geometry, using "PerInstanceCommandBuffers" and "PerGeometryHitShader";
@@ -61,6 +61,12 @@ Note that you may need to retarget the Build Tools or the Windows 10 SDK in case
 
 If something doesn't work as expected, or you wish to change anything, feel free to [open an Issue](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/issues) so we can discuss about it.
 
+## Issues / Contributions
+
+If something doesn't work as expected, or you have any doubt, feel free to [open an Issue](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/issues)!
+
+If you think something could be better or you wish to improve the project, [open an Issue](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/issues) or fork the project and open a [Pull request](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/pulls), every contribution is appreciated.
+
 ## Resources
 
 * [Microsoft DirectX 12 Samples](https://github.com/microsoft/DirectX-Graphics-Samples) -> [Raytracing Samples](https://github.com/microsoft/DirectX-Graphics-Samples/tree/master/Samples/Desktop/D3D12Raytracing);
@@ -68,4 +74,4 @@ If something doesn't work as expected, or you wish to change anything, feel free
 * [Nvidia Raytracing home](https://developer.nvidia.com/rtx/raytracing);
 * [Nvidia DirectX Raytracing Basic Tutorial](https://developer.nvidia.com/rtx/raytracing/dxr/DX12-Raytracing-tutorial-Part-1);
 * [Nvidia DirectX Raytracing Advanced Tutorial](https://github.com/NVIDIAGameWorks/DxrTutorials);
-* [Jorgemagic C# DirectX Raytracing Examples](https://github.com/Jorgemagic/CSharpDirectXRaytracing) (even if not made in C++ these examples are very useful!).
+* [Jorgemagic C# DirectX Raytracing Examples](https://github.com/Jorgemagic/CSharpDirectXRaytracing) (even if not made in C++ these examples are very useful and used as reference).
