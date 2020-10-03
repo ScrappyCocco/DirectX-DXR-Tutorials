@@ -46,9 +46,14 @@ SampleFramework::IDxcBlobPtr DirectXUtil::RTPipeline::compileLibrary(const WCHAR
 		pLibrary->CreateBlobWithEncodingFromPinned(
 			LPBYTE(shader.c_str()),
 			static_cast<uint32_t>(shader.size()),
-			0, &pTextBlob
+			0,
+			&pTextBlob
 		)
 	);
+
+	//Create include handler
+	SampleFramework::IDxcIncludeHandlerPtr includeHandler;
+	pLibrary->CreateIncludeHandler(includeHandler.GetAddressOf());
 
 	// Compile
 	SampleFramework::IDxcOperationResultPtr pResult;
@@ -62,7 +67,7 @@ SampleFramework::IDxcBlobPtr DirectXUtil::RTPipeline::compileLibrary(const WCHAR
 			0,
 			nullptr,
 			0,
-			nullptr,
+			includeHandler.Get(),
 			&pResult
 		)
 	);

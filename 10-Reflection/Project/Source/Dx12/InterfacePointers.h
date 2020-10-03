@@ -42,6 +42,7 @@ namespace SampleFramework
 	typedef Microsoft::WRL::ComPtr<IDxcBlob> IDxcBlobPtr;
 	typedef Microsoft::WRL::ComPtr<IDxcCompiler> IDxcCompilerPtr;
 	typedef Microsoft::WRL::ComPtr<IDxcLibrary> IDxcLibraryPtr;
+	typedef Microsoft::WRL::ComPtr<IDxcIncludeHandler> IDxcIncludeHandlerPtr;
 
 	// D3D12
 	typedef Microsoft::WRL::ComPtr<ID3D12CommandAllocator> ID3D12CommandAllocatorPtr;

@@ -50,6 +50,10 @@ SampleFramework::IDxcBlobPtr DirectXUtil::RTPipeline::compileLibrary(const WCHAR
 		)
 	);
 
+	//Create include handler
+	SampleFramework::IDxcIncludeHandlerPtr includeHandler;
+	pLibrary->CreateIncludeHandler(includeHandler.GetAddressOf());
+
 	// Compile
 	SampleFramework::IDxcOperationResultPtr pResult;
 	ThrowIfFailed(
@@ -62,7 +66,7 @@ SampleFramework::IDxcBlobPtr DirectXUtil::RTPipeline::compileLibrary(const WCHAR
 			0,
 			nullptr,
 			0,
-			nullptr,
+			includeHandler.Get(),
 			&pResult
 		)
 	);
