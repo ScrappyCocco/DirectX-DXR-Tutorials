@@ -36,7 +36,7 @@ Note that the whole tutorial documentation in the Nvidia repository is in .doc/.
   - [Original tutorial](#original-tutorial)
 
 # Introduction
-This document require that you understood the basic Raytracing flow made in Tutorial 5, so know the basics to render multiple Raytraced triangles, and can go in-depth to see how to render the same example without using helper classes.
+This document require that you understood the basic Raytracing flow made in [Tutorial 5](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/05-DXRTriangle-AnimatedTriangle), so know the basics to render multiple Raytraced triangles, and can go in-depth to see how to render the same example without using helper classes.
 
 The basics are exactly the same of the past 5 tutorials, this one is only larger because explicitly declare and allocate lots of resources that were in the helper classes.
 
@@ -52,7 +52,7 @@ Microsoft::WRL::ComPtr
 ```
 as it was in older tutorials, so all the code has been updated to use this type of smart pointers.
 
-For simplicity, most of these smart pointers used in the project are defined in the file [InterfacePointers.h](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Dx12/InterfacePointers.h).
+For simplicity, most of these smart pointers used in the project are defined in the file [InterfacePointers.h](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Dx12/InterfacePointers.h).
 
 # GLM `#define`
 This tutorial use glm for matrices and other mathematical operations.
@@ -65,7 +65,7 @@ To make sure glm is used as intended, this tutorial **doesn't define:**
 So every initialization is done manually or writing values in the constructor.
 
 # Window creation
-The window management is different from Nvidia code but equal to other tutorials, so you can check [Win32Application.cpp](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Win32Application.cpp) about that.
+The window management is different from Nvidia code but equal to other tutorials, so you can check [Win32Application.cpp](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Win32Application.cpp) about that.
 
 ## Events
 Once again, this tutorial use the virtual calls:
@@ -75,16 +75,16 @@ virtual void OnUpdate();
 virtual void OnRender();
 virtual void OnDestroy();
 ```
-defined in [DXSample.h#L12](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/DXSample.h#L12).
+defined in [DXSample.h#L12](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/DXSample.h#L12).
 
 # Initialization
 We will need to create a device, swap-chain, command-queue, command-list, command-allocator, descriptor-heap and a fence. Remember – it is assumed that the user is familiar with DirectX12 programming, so we will not actually cover most of those objects.
 
 Note that DXR functions are a part of the ID3D12Device5 and ID3D12GraphicsCommandList4 interfaces.
 
-All the DXR resource creation is in file [D3D12GraphicsContext.cpp](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/D3D12GraphicsContext.cpp).
+All the DXR resource creation is in file [D3D12GraphicsContext.cpp](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/D3D12GraphicsContext.cpp).
 
-The Initialization of the whole project is made in [D3D12HelloTriangle.cpp#L24](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/D3D12HelloTriangle.cpp#L24).
+The Initialization of the whole project is made in [D3D12HelloTriangle.cpp#L24](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/D3D12HelloTriangle.cpp#L24).
 
 # Accelleration structure
 Once again:
@@ -92,12 +92,12 @@ Once again:
 * The BLAS is a data structure that represent a local-space mesh. It does not contain information regarding the world-space location of the vertices or instancing information;
 * The TLAS is an opaque data structure that represents the entire scene. As you recall, BLAS represents objects in local space. The TLAS references the bottom-level structures, with each reference containing local-to-world transformation matrix.
 
-It's managed inside [AccelerationStructures.cpp](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/AccelerationStructures.cpp).
+It's managed inside [AccelerationStructures.cpp](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/AccelerationStructures.cpp).
 
-The creation is made from [D3D12HelloTriangle.cpp#L248](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/D3D12HelloTriangle.cpp#L248).
+The creation is made from [D3D12HelloTriangle.cpp#L248](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/D3D12HelloTriangle.cpp#L248).
 And as you can see the order of creation events is quite clear.
 
-Note that the triangle rotation this time is not inside `OnUpdate()` but inside `buildTopLevelAS(...)` -> [AccelerationStructures.cpp#L232](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/AccelerationStructures.cpp#L232).
+Note that the triangle rotation this time is not inside `OnUpdate()` but inside `buildTopLevelAS(...)` -> [AccelerationStructures.cpp#L232](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/AccelerationStructures.cpp#L232).
 
 The basics seen in tutorial 5 about updating the TopLevelAS remain the same.
 
@@ -106,21 +106,21 @@ After creating some buffers and recorded commands to create bottom-level and top
 The last part is releasing resources that are no longer required and keep references to the resources which will be used for rendering.
 
 # RT Pipeline
-The RT Pipeline is managed inside [RTPipeline.cpp](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/RTPipeline.cpp).
+The RT Pipeline is managed inside [RTPipeline.cpp](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/RTPipeline.cpp).
 
 ## Shader libraries
 dxcompiler, the new SM6.x compiler, introduces a new concept called shader-libraries. Libraries allow us to compile a file containing multiple shaders without specifying an entry point. We create shader libraries by specifying "lib_6_3" as the target profile, which requires us to use an empty string for the entry point.
 
 Using dxcompiler is straightforward but is not in the scope of this tutorial.
 
-You can see how is used here [RTPipeline.cpp#L29](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/RTPipeline.cpp#L29).
+You can see how is used here [RTPipeline.cpp#L29](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/RTPipeline.cpp#L29).
 
 ## Shader code
-The [Shader code](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/shaders/Shaders.hlsl) is basically the same of tutorial 5, except this time is all inside a single file.
+The [Shader code](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/shaders/Shaders.hlsl) is basically the same of tutorial 5, except this time is all inside a single file.
 
 ## Creating the RT Pipeline State Object
 This use some abstractions to make the creation easier:
-### [DxilLibrary](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/Structs/DxilLibrary.h)
+### [DxilLibrary](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/Structs/DxilLibrary.h)
 This is our abstraction for a sub-object of type `D3D12_STATE_SUBOBJECT_TYPE_DXIL_LIBRARY`.
 
 The library accepts a single ID3DBlob object which contains an SM6.1 library. This library can contain multiple entry points, and we need to specify which entry points we plan to use. In our case, we store shaders entry points.
@@ -129,28 +129,28 @@ The library accepts a single ID3DBlob object which contains an SM6.1 library. Th
 1. We cache the entry-point name into a pre-allocated member vector of strings;
 2. We set `ExportToRename` to `nullptr`. Later we will see that we need a way to identify each shader inside a state-object. This is usually done by passing the entry-point name to the required function. There could be cases where shaders from different blobs share the same entry-point name, making the identification ambiguous. To resolve this, we can use `ExportToRename` to give each shader a unique name. In our case, we set it to `nullptr` since each shader has a unique-entry point name.
 
-### [HitProgram](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/Structs/HitProgram.h)
+### [HitProgram](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/Structs/HitProgram.h)
 HitProgram is an abstraction over a `D3D12_STATE_SUBOBJECT_TYPE_HIT_GROUP` sub-object. A hit-group is a collection of intersection, any-hit and closest-hit shaders, at most one of each type. Since we don’t use custom intersection-shaders in these tutorials, our HitProgram object only accepts AHS and CHS entry point name.
 
-### [LocalRootSignature](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/Structs/LocalRootSignature.h)
+### [LocalRootSignature](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/Structs/LocalRootSignature.h)
 DXR introduces a new concept called Local Root Signature (LRS). In graphics and compute pipelines, we have a single, global root-signature used by all programs. For ray-tracing, in addition to that root-signature, we can create local root-signatures and bind them to specific shaders.
 
-### [ExportAssociation](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/Structs/ExportAssociation.h)
+### [ExportAssociation](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/Structs/ExportAssociation.h)
 An ExportAssociation object binds a sub-object into shaders and hit-groups.
 
-### [ShaderConfig](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/Structs/ShaderConfig.h)
+### [ShaderConfig](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/Structs/ShaderConfig.h)
 Next bit is the shader configuration. There are 2 values we need to set:
 1. The payload size in bytes. This is the size of the payload struct we defined in the HLSL. In our case the payload is a single bool (4-bytes in HLSL);
 2. The attributes size in bytes. This is the size of the data the hit-shader accepts as its intersection-attributes parameter. For the built-in intersection shader, the attributes size is 8-bytes (2 floats).
 
-### [PipelineConfig](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/Structs/PipelineConfig.h)
+### [PipelineConfig](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/Structs/PipelineConfig.h)
 The pipeline configuration is a global sub-object affecting all pipeline stages. In the case of raytracing, it contains a single value - MaxTraceRecursionDepth. This value simply tells the pipeline how many recursive raytracing calls we are going to make.
 
-### [GlobalRootSignature](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/Utils/Structs/GlobalRootSignature.h)
+### [GlobalRootSignature](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/Utils/Structs/GlobalRootSignature.h)
 The last piece of the puzzle is the global root-signature. As the name suggests, this root-signature affects all shaders attached to the pipeline. The final root-signature of a shader is defined by both the global and the shader’s local root-signature. The code is straightforward.
 
 ### Creation
-With all this structures, we can initialize all the necessary data and finally craete the pipeline object: [D3D12HelloTriangle.cpp#L285](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/D3D12HelloTriangle.cpp#L285).
+With all this structures, we can initialize all the necessary data and finally craete the pipeline object: [D3D12HelloTriangle.cpp#L285](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/D3D12HelloTriangle.cpp#L285).
 
 # Shader Table
 ## Nvidia suggestion
@@ -184,10 +184,10 @@ For root constants and root descriptors we set the same data as what would be pa
 Another important thing is that root-descriptors must be stored at an 8-byte aligned address, so in some cases padding might be required.
 
 ## Creation
-You can check the Shader Table creation in this method here: [D3D12HelloTriangle.cpp#L403](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/D3D12HelloTriangle.cpp#L403).
+You can check the Shader Table creation in this method here: [D3D12HelloTriangle.cpp#L403](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/D3D12HelloTriangle.cpp#L403).
 
 # Raytracing
-Now that everything is in place we can update the TopLevelAS with the new rotations, and bind the data to finally call the `DispatchRays`: [D3D12HelloTriangle.cpp#L116](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/6-DXRTriangle-Rework/Project/Source/D3D12HelloTriangle.cpp#L116).
+Now that everything is in place we can update the TopLevelAS with the new rotations, and bind the data to finally call the `DispatchRays`: [D3D12HelloTriangle.cpp#L116](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/06-DXRTriangle-Rework/Project/Source/D3D12HelloTriangle.cpp#L116).
 
 # Further reading
 ## Details
