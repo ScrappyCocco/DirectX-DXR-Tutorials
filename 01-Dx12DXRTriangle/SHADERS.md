@@ -2,14 +2,14 @@
 
 ## Contents
 - [RayGen shader](#raygen-shader)
-    - [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/shaders/RayGen.hlsl)
+    - [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/01-Dx12DXRTriangle/Project/shaders/RayGen.hlsl)
 - [Hit Shader](#hit-shader)
-    - [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/shaders/Hit.hlsl)
+    - [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/01-Dx12DXRTriangle/Project/shaders/Hit.hlsl)
 - [Miss Shader](#miss-shader)
-    - [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/shaders/Miss.hlsl)
+    - [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/01-Dx12DXRTriangle/Project/shaders/Miss.hlsl)
 
 # RayGen shader 
-### [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/shaders/RayGen.hlsl)
+### [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/01-Dx12DXRTriangle/Project/shaders/RayGen.hlsl)
 The first thing to initialize is the ray payload, that will be used to gather the results of the raytracing. The built-in `DispatchRaysIndex()` provides the 2D coordinates of the current pixel, while `DispatchRaysDimensions()` returns the size of the image being rendered.
 
 Knowing the default camera is located at (0,0,1) and looking in the direction (0,0,−1), we can setup a ray descriptor `RayDesc` representing a ray shooting straight through each pixel by offsetting the x and y coordinates of the ray origin by the normalized floating-point pixel coordinates.
@@ -31,11 +31,11 @@ The `TraceRay` **is blocking**, in essence similar to a texure lookup, for which
 We can then read the payload and write it to the output buffer.
 
 # Hit Shader 
-### [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/shaders/Hit.hlsl)
+### [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/01-Dx12DXRTriangle/Project/shaders/Hit.hlsl)
 We replicate the data structure of the vertices in the HLSL code by defining `STriVertex`, which has the same bit mapping as the Vertex structure defined on the CPU side.
 
 In the ClosestHit function of the shader, we can use the built-in `PrimitiveIndex()` call to obtain the index of the triangle we hit, remove the previous hit color computation and replace it by this to access the vertex data.
 
 # Miss Shader 
-### [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/1-Dx12DXRTriangle/Project/shaders/Miss.hlsl)
+### [(Shader code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/01-Dx12DXRTriangle/Project/shaders/Miss.hlsl)
 To slightly differentiate the raster and the raytracing, we will add a simple ramp color background by modifying the Miss function: we simply obtain the coordinates of the currently rendered pixel using and use them to compute a linear gradient.
