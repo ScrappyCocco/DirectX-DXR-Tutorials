@@ -25,10 +25,10 @@ More tutorials might be added in the future.
 * [(4) Nvidia - Another Ray Type](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/04-DXRTriangle-AnotherRayType): This tutorial add another ray to the scene, used for shadows;
 * [(5) Nvidia - Animated Scenes](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/05-DXRTriangle-AnimatedTriangle): This is the Raytracing triangles of Tutorial 4, with few changes to make the triangles rotate, to show what to change for a moving object;
 * [(6) Nvidia - Refitting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/06-DXRTriangle-Rework): This is the first tutorial **without** Nvidia helper classes. So you can see the creation and the usage of every resource;
-* [(7) Primitives](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/07-Primitives): This example shows how to create a Raytracing Acceleration Structure from vertex and index geometry buffers, rendering a Sphere or a Cube;
-* [(8) Lighting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/08-Lighting): This example shows how to lighting a mesh using Raytracing pipeline, passing vertexBuffer and indexBuffer information to the shader;
-* [(9) Shadow](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/09-Shadow): This example shows how to project shadows, adding a second geometry (ground) in the Acceleration Structure and throwing a second ray to know whether a hit point is in shadow;
-* [(10) Reflection](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/10-Reflection): This example shows how to make reflection meshes, adding a third reflected ray for each hit point recursively to calculate the final color (4 rebounds maximum deep).
+* [(7) Jorgemagic - Primitives](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/07-Primitives): This example shows how to create a Raytracing Acceleration Structure from vertex and index geometry buffers, rendering a Sphere or a Cube;
+* [(8) Jorgemagic - Lighting](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/08-Lighting): This example shows how to lighting a mesh using Raytracing pipeline, passing vertexBuffer and indexBuffer information to the shader;
+* [(9) Jorgemagic - Shadow](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/09-Shadow): This example shows how to project shadows, adding a second geometry (ground) in the Acceleration Structure and throwing a second ray to know whether a hit point is in shadow;
+* [(10) Jorgemagic - Reflection](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/10-Reflection): This example shows how to make reflection meshes, adding a third reflected ray for each hit point recursively to calculate the final color (4 rebounds maximum deep).
 * [Future...?]
 
 ## Requirements
