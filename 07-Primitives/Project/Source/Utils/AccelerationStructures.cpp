@@ -212,7 +212,6 @@ void DirectXUtil::AccelerationStructures::buildTopLevelAS(SampleFramework::ID3D1
 	ZeroMemory(instanceDescs, sizeof(D3D12_RAYTRACING_INSTANCE_DESC));
 
 	// The InstanceContributionToHitGroupIndex is set based on the shader-table layout specified in createShaderTable()
-	// Create the desc for the triangle/plane instance
 	instanceDescs[0].InstanceID = 0;
 	instanceDescs[0].InstanceContributionToHitGroupIndex = 0;
 	instanceDescs[0].Flags = D3D12_RAYTRACING_INSTANCE_FLAG_NONE;

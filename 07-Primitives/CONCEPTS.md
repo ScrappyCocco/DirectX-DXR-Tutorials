@@ -33,7 +33,7 @@ The creation of the AS is not very different from tutorial 6. After calling the 
 Also note that this tutorial doesn't update any position/rotation, so you will not find any update call (for example for updating the AS).
 
 ## Possible errors
-Always remember to define important fields, such as Transform here: [AccelerationStructures.cpp#L221](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/07-Primitives/Project/Source/Utils/AccelerationStructures.cpp#L221). Leaving it undefined will lead to errors that will not render the mesh, as the position is probably broken.
+Always remember to define important fields, such as Transform here: [AccelerationStructures.cpp#L220](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/07-Primitives/Project/Source/Utils/AccelerationStructures.cpp#L220). Leaving it undefined will lead to errors that will not render the mesh, as the position is probably broken.
 
 # Further reading
 
