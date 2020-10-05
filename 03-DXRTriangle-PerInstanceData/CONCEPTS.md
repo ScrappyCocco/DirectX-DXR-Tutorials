@@ -5,6 +5,7 @@ Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/auth
 
 ## Contents
 - [Introduction](#introduction)
+- [Changes from tutorial](#changes-from-tutorial)
 - [Note](#note)
 - [Adding more Triangles](#adding-more-triangles)
 - [Adding a Plane](#adding-a-plane)

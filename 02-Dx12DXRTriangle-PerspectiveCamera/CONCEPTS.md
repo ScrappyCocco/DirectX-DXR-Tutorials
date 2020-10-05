@@ -5,6 +5,7 @@ Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/auth
 
 ## Contents
 - [Introduction](#introduction)
+- [Changes from tutorial](#changes-from-tutorial)
 - [Creating the Camera](#creating-the-camera)
   - [Creating the Camera](#creating-the-camera-1)
   - [Updating the Camera](#updating-the-camera)
