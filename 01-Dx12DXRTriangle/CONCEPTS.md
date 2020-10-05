@@ -24,6 +24,11 @@ Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/auth
 # Introduction
 As Nvidia says, this is only for educational purposes to showcase a basic integration of raytracing, a real integration would require additional levels of abstraction.
 
+# Changes from tutorial
+In this code there is a small change from the Nvidia tutorial, to fix the shader table alignment error. To make it simple it just force the size of each record to be a multiple of 64 instead of 32.
+
+To see what changed in the code see commit: [5ddcb75](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/commit/5ddcb75460742f5675383a4299815844f26ce0c3).
+
 # Checking support
 The application need to check if the device (the GPU) support Raytracing, this is done checking:
 ```cpp

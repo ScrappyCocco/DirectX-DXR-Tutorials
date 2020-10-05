@@ -22,6 +22,11 @@ Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/auth
 # Introduction
 This document require that you understood the basic Raytracing flow made in [Tutorial 2](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/02-Dx12DXRTriangle-PerspectiveCamera), so you know the basics about how to use a perspective camera and you can start adding more geometry.
 
+# Changes from tutorial
+In this code there is a small change from the Nvidia tutorial, to fix the shader table alignment error. To make it simple it just force the size of each record to be a multiple of 64 instead of 32.
+
+To see what changed in the code see commit: [5ddcb75](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/commit/5ddcb75460742f5675383a4299815844f26ce0c3).
+
 # Note
 This tutorial, that you can find on Nvidia website, is full of unspecified things and jumps between one topics such using a Global Constant Buffer and then using a Per-Instance Constant Buffer.
 

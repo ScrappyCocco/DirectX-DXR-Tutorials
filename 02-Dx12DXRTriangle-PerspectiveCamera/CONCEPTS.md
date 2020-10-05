@@ -21,6 +21,11 @@ Again, huge thanks to [Martin-Karl Lefrançois](https://devblogs.nvidia.com/auth
 # Introduction
 This document require that you understood the basic Raytracing flow made in [Tutorial 1](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/01-Dx12DXRTriangle), once you know the basics you can start to read how to edit the standard camera to a perspective camera.
 
+# Changes from tutorial
+In this code there is a small change from the Nvidia tutorial, to fix the shader table alignment error. To make it simple it just force the size of each record to be a multiple of 64 instead of 32.
+
+To see what changed in the code see commit: [5ddcb75](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/commit/5ddcb75460742f5675383a4299815844f26ce0c3).
+
 # Creating the Camera
 ## Creating the Camera
 The new Camera is created and allocated here: [D3D12HelloTriangle.cpp#L974](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/02-Dx12DXRTriangle-PerspectiveCamera/Project/D3D12HelloTriangle.cpp#L974). This method is creating a buffer to contain all matrices. We then create a heap referencing the camera buffer, that will be used in the rasterization path.
