@@ -75,3 +75,7 @@ If you think something could be better or you wish to improve the project, [open
 * [Nvidia DirectX Raytracing Basic Tutorial](https://developer.nvidia.com/rtx/raytracing/dxr/DX12-Raytracing-tutorial-Part-1);
 * [Nvidia DirectX Raytracing Advanced Tutorial](https://github.com/NVIDIAGameWorks/DxrTutorials);
 * [Jorgemagic C# DirectX Raytracing Examples](https://github.com/Jorgemagic/CSharpDirectXRaytracing) (even if not made in C++ these examples are very useful and used as reference).
+
+## Special thanks
+
+* All the people in the [DirectX Discord server](https://discord.gg/directx), with special thanks to [adamjmiles](https://github.com/adamjmiles).
