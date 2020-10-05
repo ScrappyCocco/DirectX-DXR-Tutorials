@@ -81,7 +81,7 @@ namespace nv_helpers_dx12
 	uint32_t ShaderBindingTableGenerator::ComputeSBTSize()
 	{
 		// Size of a program identifier
-		m_progIdSize = D3D12_RAYTRACING_SHADER_RECORD_BYTE_ALIGNMENT;
+		m_progIdSize = D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES;
 		// Compute the entry size of each program type depending on the maximum number of parameters in
 		// each category
 		m_rayGenEntrySize = GetEntrySize(m_rayGen);
@@ -243,7 +243,7 @@ namespace nv_helpers_dx12
 		uint32_t entrySize = m_progIdSize + 8 * static_cast<uint32_t>(maxArgs);
 
 		// The entries of the shader binding table must be 16-bytes-aligned
-		entrySize = ROUND_UP(entrySize, D3D12_RAYTRACING_SHADER_RECORD_BYTE_ALIGNMENT);
+		entrySize = ROUND_UP(entrySize, D3D12_RAYTRACING_SHADER_TABLE_BYTE_ALIGNMENT);
 
 		return entrySize;
 	}
