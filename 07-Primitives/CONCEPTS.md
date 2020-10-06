@@ -5,6 +5,7 @@ Thanks to [Jorgemagic](https://github.com/Jorgemagic) for his examples.
 
 ## Contents
 - [Introduction](#introduction)
+- [Preprocessor directives](#preprocessor-directives)
 - [Primitive(s) creation](#primitives-creation)
   - [Vertex/Index creation](#vertexindex-creation)
   - [Buffer creation and fill](#buffer-creation-and-fill)
@@ -17,6 +18,13 @@ Thanks to [Jorgemagic](https://github.com/Jorgemagic) for his examples.
 This document require that you understood the basic Raytracing flow made in [Tutorial 6](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/06-DXRTriangle-Rework), so know the basics to render multiple Raytraced triangles, and can go in-depth to see how to render a more complex mesh.
 
 The basics are exactly the same of the past 6 tutorials, but is very important you understood the project structure of tutorial 6, that doesn't use any Nvidia helper class.
+
+# Preprocessor directives
+This project has:
+```cpp
+#define _USE_MATH_DEFINES
+```
+defined in the project file, used mostly to use the constant: `M_PI`.
 
 # Primitive(s) creation
 One important change in this tutorial is that we will use actual meshes made of vertex/index buffers than a simple triangle.
