@@ -4,6 +4,18 @@ This document is a small list of important concepts, in order to focus attention
 Thanks to [Jorgemagic](https://github.com/Jorgemagic) for his examples.
 
 ## Contents
+- [Introduction](#introduction)
+- [Preprocessor directives](#preprocessor-directives)
+- [Acceleration Structures / Primitives](#acceleration-structures--primitives)
+- [RT Pipeline](#rt-pipeline)
+- [Main file](#main-file)
+- [Shaders](#shaders)
+  - [Helpers.hlsli](#helpershlsli)
+    - [(Shader Code)](#shader-code)
+  - [Shaders.hlsl](#shadershlsl)
+    - [(Shader Code)](#shader-code-1)
+- [Further reading](#further-reading)
+  - [Original tutorial](#original-tutorial)
 
 # Introduction
 This document require that you understood the basic Raytracing flow made in [Tutorial 8](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/tree/master/08-Lighting), so you understood the basic of lighting and can add a basic shadow.
