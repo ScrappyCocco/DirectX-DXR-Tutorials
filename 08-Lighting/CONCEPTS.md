@@ -6,7 +6,7 @@ Thanks to [Jorgemagic](https://github.com/Jorgemagic) for his examples.
 ## Contents
 - [Introduction](#introduction)
 - [Preprocessor directives](#preprocessor-directives)
-- [Accelleration Structures / RT Pipeline](#accelleration-structures--rt-pipeline)
+- [Acceleration Structures / RT Pipeline](#acceleration-structures--rt-pipeline)
 - [Main file](#main-file)
 - [Shaders](#shaders)
   - [Helpers.hlsli](#helpershlsli)
@@ -28,8 +28,8 @@ This project has:
 ```
 defined in the project file, used mostly to use the constant: `M_PI`.
 
-# Accelleration Structures / RT Pipeline
-One small difference in the Accelleration Structures files, is that the created primitive is now a static pointer: [AccelerationStructures.h#L34](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/08-Lighting/Project/Source/Utils/AccelerationStructures.h#L34), this to access its index/vertex buffer directly: [D3D12Lighting.cpp#L457](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/08-Lighting/Project/Source/D3D12Lighting.cpp#L457).
+# Acceleration Structures / RT Pipeline
+One small difference in the Acceleration Structures files, is that the created primitive is now a static pointer: [AccelerationStructures.h#L34](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/08-Lighting/Project/Source/Utils/AccelerationStructures.h#L34), this to access its index/vertex buffer directly: [D3D12Lighting.cpp#L457](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/08-Lighting/Project/Source/D3D12Lighting.cpp#L457).
 
 The RTPipeline has now a specific Hit descriptor: [RTPipeline.cpp#L117](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/08-Lighting/Project/Source/Utils/RTPipeline.cpp#L117).
 

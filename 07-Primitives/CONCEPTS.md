@@ -9,7 +9,7 @@ Thanks to [Jorgemagic](https://github.com/Jorgemagic) for his examples.
 - [Primitive(s) creation](#primitives-creation)
   - [Vertex/Index creation](#vertexindex-creation)
   - [Buffer creation and fill](#buffer-creation-and-fill)
-- [Accelleration Structure creation](#accelleration-structure-creation)
+- [Acceleration Structure creation](#acceleration-structure-creation)
   - [Possible errors](#possible-errors)
 - [Further reading](#further-reading)
   - [Original tutorial](#original-tutorial)
@@ -35,7 +35,7 @@ So, from the basic example, we now have this class: [Primitives.h](https://githu
 ## Buffer creation and fill
 That call is made from here: [AccelerationStructures.cpp#L59](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/07-Primitives/Project/Source/Utils/AccelerationStructures.cpp#L59) that also create the actual DX buffers, and copy the data into them.
 
-# Accelleration Structure creation
+# Acceleration Structure creation
 The creation of the AS is not very different from tutorial 6. After calling the method that create the Primitive buffers, the creation is very similar to the past tutorial: [AccelerationStructures.cpp#L110](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/07-Primitives/Project/Source/Utils/AccelerationStructures.cpp#L110). Just for convenience i let a `for` cycle for a single element.
 
 Also note that this tutorial doesn't update any position/rotation, so you will not find any update call (for example for updating the AS).
