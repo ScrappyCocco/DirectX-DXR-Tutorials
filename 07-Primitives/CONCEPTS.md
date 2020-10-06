@@ -10,7 +10,9 @@ Thanks to [Jorgemagic](https://github.com/Jorgemagic) for his examples.
   - [Vertex/Index creation](#vertexindex-creation)
   - [Buffer creation and fill](#buffer-creation-and-fill)
 - [Acceleration Structure creation](#acceleration-structure-creation)
-  - [Possible errors](#possible-errors)
+- [Possible errors](#possible-errors)
+    - [Define transform](#define-transform)
+    - [Shader import](#shader-import)
 - [Further reading](#further-reading)
   - [Original tutorial](#original-tutorial)
 
@@ -40,7 +42,7 @@ The creation of the AS is not very different from tutorial 6. After calling the 
 
 Also note that this tutorial doesn't update any position/rotation, so you will not find any update call (for example for updating the AS).
 
-## Possible errors
+# Possible errors
 
 ### Define transform
 Always remember to define important fields, such as Transform here: [AccelerationStructures.cpp#L220](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/07-Primitives/Project/Source/Utils/AccelerationStructures.cpp#L220). Leaving it undefined will lead to errors that will not render the mesh, as the position is probably broken.
