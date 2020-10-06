@@ -47,7 +47,8 @@ SampleFramework::IDxcBlobPtr DirectXUtil::RTPipeline::compileLibrary(const WCHAR
 		pLibrary->CreateBlobWithEncodingFromPinned(
 			LPBYTE(shader.c_str()),
 			static_cast<uint32_t>(shader.size()),
-			0, &pTextBlob
+			0,
+			&pTextBlob
 		)
 	);
 
