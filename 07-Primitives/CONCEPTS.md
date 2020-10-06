@@ -41,7 +41,12 @@ The creation of the AS is not very different from tutorial 6. After calling the 
 Also note that this tutorial doesn't update any position/rotation, so you will not find any update call (for example for updating the AS).
 
 ## Possible errors
+
+### Define transform
 Always remember to define important fields, such as Transform here: [AccelerationStructures.cpp#L220](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/07-Primitives/Project/Source/Utils/AccelerationStructures.cpp#L220). Leaving it undefined will lead to errors that will not render the mesh, as the position is probably broken.
+
+### Shader import
+If any of your shaders use the `#include` directive, remember to create and use the **include handler** when you compile the shader, look at: [RTPipeline.cpp#L54](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/07-Primitives/Project/Source/Utils/RTPipeline.cpp#L54). Without it, the code will not work.
 
 # Further reading
 
