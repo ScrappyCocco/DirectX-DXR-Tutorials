@@ -55,12 +55,12 @@ I have not touched the shader files, they are the same Jorgemagic use in [his ex
 ## Helpers.hlsli
 ### [(Shader Code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/09-Shadow/Project/shaders/Helpers.hlsli)
 
-Added a couple of variables and small changes to consider if an object is in shadow and/or the shadowFactor in diffuse.
+Added a couple of variables and small changes to consider if an object is in shadow and/or the `shadowFactor` in diffuse lighting.
 
 ## Shaders.hlsl
 ### [(Shader Code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/09-Shadow/Project/shaders/Shaders.hlsl)
 
-Apart from some changes such as the ShadowPayload, the main difference is the shadow ray: [Shaders.hlsl#L96](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/09-Shadow/Project/shaders/Shaders.hlsl#L96).
+Apart from some changes such as the ShadowPayload, the main difference is the usage of a shadow ray: [Shaders.hlsl#L96](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/09-Shadow/Project/shaders/Shaders.hlsl#L96).
 
 # Further reading
 

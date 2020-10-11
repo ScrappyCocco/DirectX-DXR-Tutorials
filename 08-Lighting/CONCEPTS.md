@@ -42,7 +42,7 @@ I have not touched the shader files, they are the same Jorgemagic use in [his ex
 ## Helpers.hlsli
 ### [(Shader Code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/08-Lighting/Project/shaders/Helpers.hlsli)
 
-A lot of new variables and function have been added to the Helper file, to calculate the whole Lighting.
+A lot of new variables and function have been added to the Helper file, to calculate the whole Lighting according to camera position, light position, and variables such as the specular power.
 
 ## Shaders.hlsl
 ### [(Shader Code)](https://github.com/ScrappyCocco/DirectX-DXR-Tutorials/blob/master/08-Lighting/Project/shaders/Shaders.hlsl)
